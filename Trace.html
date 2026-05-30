@@ -1,0 +1,1965 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRACE — Instrumentation | Electrical</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;500;600;700;900&family=Barlow+Condensed:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════
+   TRACE — DESIGN SYSTEM
+═══════════════════════════════════════ */
+:root{
+  --bg:#060d06;
+  --bg2:#0a110a;
+  --panel:#0e160e;
+  --card:#111911;
+  --card2:#141c14;
+  --border:#1c2e1c;
+  --border2:#243824;
+  --green:#4a8c3f;
+  --green-bright:#5cb85c;
+  --green-light:#78c878;
+  --green-dim:#2e5c2e;
+  --green-glow:rgba(92,184,92,0.12);
+  --white:#ffffff;
+  --off-white:#f0f4f0;
+  --text:#c8dcc8;
+  --muted:#6a8e6a;
+  --muted2:#4a6a4a;
+  --heading:#ffffff;
+  --error:#e05252;
+  --error-dim:rgba(224,82,82,0.12);
+  --mono:'Share Tech Mono',monospace;
+  --sans:'Barlow',sans-serif;
+  --cond:'Barlow Condensed',sans-serif;
+  --radius:6px;
+  --radius-lg:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+/* Grid texture */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(28,46,28,0.4) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(28,46,28,0.4) 1px,transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;z-index:0;
+}
+
+/* ─── LANDING PAGE ─────────────────────── */
+#landing{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:40px 24px;
+  overflow:hidden;
+}
+
+/* Radial green glow behind logo */
+#landing::after{
+  content:'';position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-60%);
+  width:600px;height:600px;
+  background:radial-gradient(circle,rgba(74,140,63,0.18) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+.landing-inner{position:relative;z-index:1;text-align:center;max-width:680px;width:100%;}
+
+/* TRACE real logo on landing */
+.trace-logo-wrap{
+  width:100%;max-width:600px;
+  margin:0 auto 28px;
+}
+.trace-logo-img{
+  width:100%;height:auto;display:block;
+  border-radius:8px;
+}
+
+/* Header logo image */
+.header-logo-img{
+  height:28px;
+  width:auto;
+  display:block;
+  filter:brightness(1.05);
+}
+
+.landing-brand{
+  font-family:var(--cond);
+  font-size:clamp(3rem,10vw,5.5rem);
+  font-weight:900;
+  letter-spacing:.2em;
+  color:var(--white);
+  line-height:1;
+  margin-bottom:6px;
+  text-transform:uppercase;
+}
+.landing-brand span{
+  color:var(--green-bright);
+  position:relative;
+}
+
+.landing-tag{
+  font-family:var(--mono);
+  font-size:.75rem;
+  letter-spacing:.25em;
+  color:var(--green-bright);
+  text-transform:uppercase;
+  margin-bottom:32px;
+  opacity:.8;
+}
+
+.landing-desc{
+  font-size:1.05rem;
+  font-weight:300;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:480px;
+  margin:0 auto 48px;
+  letter-spacing:.01em;
+}
+.landing-desc strong{color:var(--off-white);font-weight:500;}
+
+/* Feature pills */
+.feature-pills{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+  margin-bottom:52px;
+}
+.pill{
+  font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;
+  padding:7px 16px;border-radius:100px;
+  background:rgba(74,140,63,0.1);
+  border:1px solid var(--border2);
+  color:var(--muted);
+  text-transform:uppercase;
+  transition:all .2s;
+}
+.pill:hover{border-color:var(--green-dim);color:var(--green-light);}
+
+/* CTA button */
+.cta-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:linear-gradient(135deg,var(--green),var(--green-bright));
+  color:#fff;
+  border:none;border-radius:var(--radius);
+  padding:16px 40px;
+  font-family:var(--cond);font-size:1.1rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:0 4px 24px rgba(74,140,63,0.35),0 1px 0 rgba(255,255,255,0.1) inset;
+  transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.cta-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent,rgba(255,255,255,0.08));
+}
+.cta-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 32px rgba(74,140,63,0.45),0 1px 0 rgba(255,255,255,0.1) inset;
+}
+.cta-btn:active{transform:translateY(0);}
+.cta-arrow{font-size:1.2rem;transition:transform .2s;}
+.cta-btn:hover .cta-arrow{transform:translateX(4px);}
+
+/* Divider line */
+.landing-divider{
+  width:100%;max-width:480px;margin:60px auto 0;
+  border:none;border-top:1px solid var(--border);
+  position:relative;
+}
+.landing-divider::after{
+  content:'TRACE FIELD TOOLS';position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.6rem;color:var(--muted2);
+  background:var(--bg);padding:0 12px;letter-spacing:.2em;
+}
+
+/* ─── APP SHELL ────────────────────────── */
+#app{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+#app.visible{display:flex;}
+
+/* Header */
+.app-header{
+  position:sticky;top:0;z-index:100;
+  height:56px;
+  background:rgba(6,13,6,0.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+}
+.app-logo{
+  display:flex;align-items:center;cursor:pointer;
+  text-decoration:none;
+}
+.app-logo-icon{display:none;}
+.header-logo-img{
+  height:30px;
+  width:auto;
+  display:block;
+}
+.app-status{display:flex;align-items:center;gap:7px;}
+.app-status span{font-family:var(--mono);font-size:.65rem;color:var(--muted2);letter-spacing:.1em;}
+.status-dot{width:7px;height:7px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 6px var(--green-bright);animation:pulse 2.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+/* Nav */
+.app-nav{
+  position:sticky;top:56px;z-index:99;
+  display:flex;overflow-x:auto;
+  background:var(--panel);
+  border-bottom:1px solid var(--border);
+  padding:0 16px;
+  scrollbar-width:none;
+  gap:0;
+}
+.app-nav::-webkit-scrollbar{display:none;}
+.tab{
+  flex-shrink:0;
+  font-family:var(--cond);font-size:.78rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:14px 18px;
+  cursor:pointer;
+  color:var(--muted2);
+  border-bottom:2px solid transparent;
+  transition:all .18s;
+  white-space:nowrap;
+  position:relative;
+}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--green-bright);border-bottom-color:var(--green-bright);}
+
+/* Main content */
+.app-main{
+  flex:1;
+  max-width:960px;margin:0 auto;
+  padding:24px 16px 80px;
+  width:100%;
+  position:relative;z-index:1;
+}
+
+/* Section */
+.section{display:none;}
+.section.active{display:block;}
+.section-title{
+  font-family:var(--cond);font-size:2rem;font-weight:900;
+  color:var(--heading);letter-spacing:.04em;
+  margin-bottom:2px;
+  line-height:1;
+}
+.section-sub{color:var(--muted);font-size:.85rem;margin-bottom:22px;font-weight:300;letter-spacing:.02em;}
+
+/* Sub-tabs */
+.sub-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+.sub-tab{
+  font-family:var(--cond);font-size:.75rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:6px 14px;border-radius:100px;
+  cursor:pointer;
+  background:transparent;
+  border:1px solid var(--border2);
+  color:var(--muted2);
+  transition:all .15s;
+}
+.sub-tab:hover{color:var(--text);border-color:var(--muted2);}
+.sub-tab.active{
+  background:rgba(92,184,92,0.1);
+  border-color:var(--green-bright);
+  color:var(--green-bright);
+}
+.sub-section{display:none;}
+.sub-section.active{display:block;}
+
+/* Cards */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:20px;
+  margin-bottom:14px;
+  position:relative;
+  overflow:hidden;
+}
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(92,184,92,0.15),transparent);
+}
+.card-title{
+  font-family:var(--cond);font-size:1rem;font-weight:700;
+  color:var(--green-light);letter-spacing:.06em;
+  margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+  text-transform:uppercase;
+}
+
+/* Forms */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+@media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
+.form-group{display:flex;flex-direction:column;gap:5px;}
+label{
+  font-family:var(--mono);font-size:.68rem;
+  color:var(--muted2);
+  text-transform:uppercase;letter-spacing:.1em;
+}
+input,select{
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  border-radius:var(--radius);
+  color:var(--heading);
+  padding:10px 12px;
+  font-size:.92rem;
+  font-family:var(--sans);
+  outline:none;
+  transition:border-color .15s,box-shadow .15s;
+  width:100%;
+  appearance:none;
+  -webkit-appearance:none;
+}
+input:focus,select:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 3px rgba(74,140,63,0.12);
+}
+select option{background:var(--panel);}
+
+/* Button */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--green),var(--green-bright));
+  color:#fff;border:none;border-radius:var(--radius);
+  padding:11px 24px;
+  font-family:var(--cond);font-size:.95rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;
+  box-shadow:0 2px 12px rgba(74,140,63,0.3);
+  transition:all .15s;
+  position:relative;overflow:hidden;
+}
+.btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.07));}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 20px rgba(74,140,63,0.4);}
+.btn:active{transform:translateY(0);}
+
+/* Results */
+.result-box{
+  background:rgba(92,184,92,0.04);
+  border:1px solid rgba(92,184,92,0.18);
+  border-radius:var(--radius);
+  padding:16px;margin-top:14px;
+  display:none;
+}
+.result-box.show{display:block;}
+.result-title{
+  font-family:var(--cond);font-weight:700;
+  color:var(--green-light);
+  margin-bottom:12px;font-size:.85rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding-bottom:8px;
+  border-bottom:1px solid rgba(92,184,92,0.12);
+}
+.result-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+  font-size:.85rem;
+}
+.result-row:last-child{border-bottom:none;}
+.result-label{color:var(--muted);font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;}
+.result-value{color:var(--green-bright);font-family:var(--mono);font-weight:700;font-size:.88rem;}
+
+/* Error */
+.error-box{
+  background:var(--error-dim);
+  border:1px solid rgba(224,82,82,0.3);
+  border-radius:var(--radius);
+  padding:10px 14px;color:var(--error);
+  font-size:.84rem;margin-top:12px;display:none;
+}
+.error-box.show{display:block;}
+
+/* Info banner */
+.info-banner{
+  background:rgba(74,140,63,0.08);
+  border:1px solid rgba(92,184,92,0.18);
+  border-radius:var(--radius);
+  padding:11px 14px;
+  font-size:.82rem;color:var(--muted);
+  margin-bottom:16px;
+  line-height:1.5;
+}
+.info-banner::before{content:'ℹ  ';}
+
+/* Diagram box */
+.diagram-box{
+  background:#060d06;
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:16px;margin-top:12px;
+  position:relative;
+}
+.diagram-box::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(92,184,92,0.2),transparent);
+}
+.diagram-box svg{width:100%;height:auto;display:block;}
+.diagram-title{
+  font-family:var(--mono);font-size:.68rem;
+  color:var(--muted2);letter-spacing:.12em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+
+/* Fault accordion */
+.fault-item{
+  background:var(--card2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  margin-bottom:6px;overflow:hidden;
+  transition:border-color .15s;
+}
+.fault-item:hover{border-color:var(--border2);}
+.fault-q{
+  padding:14px 16px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:500;font-size:.9rem;color:var(--text);
+  transition:background .15s;
+  gap:12px;
+}
+.fault-q:hover{background:rgba(255,255,255,0.02);}
+.fault-q .chevron{color:var(--muted2);transition:transform .2s;font-size:.7rem;flex-shrink:0;}
+.fault-q.open .chevron{transform:rotate(180deg);}
+.fault-ans{
+  display:none;padding:0 16px 14px;
+  color:var(--muted);font-size:.84rem;line-height:1.65;
+  border-top:1px solid var(--border);
+}
+.fault-ans.open{display:block;}
+.fault-step{display:flex;gap:10px;align-items:flex-start;margin-top:10px;}
+.step-num{
+  background:linear-gradient(135deg,var(--green),var(--green-bright));
+  color:#fff;border-radius:4px;
+  font-size:.65rem;font-weight:900;
+  width:20px;height:20px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;font-family:var(--mono);
+}
+
+/* Reference table */
+.ref-category{
+  font-family:var(--cond);font-size:.85rem;font-weight:700;
+  color:var(--green-light);letter-spacing:.1em;text-transform:uppercase;
+  margin:22px 0 10px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+}
+.ref-table{width:100%;border-collapse:collapse;font-size:.83rem;margin-bottom:14px;}
+.ref-table th{
+  background:var(--bg2);color:var(--muted2);
+  font-family:var(--mono);font-size:.68rem;text-transform:uppercase;
+  letter-spacing:.08em;padding:8px 12px;text-align:left;
+  border-bottom:1px solid var(--border);
+}
+.ref-table td{
+  padding:9px 12px;
+  border-bottom:1px solid rgba(28,46,28,0.5);
+  color:var(--text);vertical-align:top;
+}
+.ref-table tr:hover td{background:rgba(92,184,92,0.03);}
+.tag{
+  display:inline-block;
+  background:rgba(74,140,63,0.18);color:var(--green-light);
+  border-radius:4px;font-size:.68rem;font-weight:700;
+  padding:2px 7px;font-family:var(--mono);
+}
+.tag.green{background:rgba(92,184,92,0.12);color:#81c784;}
+.tag.red{background:rgba(224,82,82,0.12);color:var(--error);}
+</style>
+</head>
+<body>
+
+<!-- ═══ LANDING PAGE ═══ -->
+<div id="landing">
+  <div class="landing-inner">
+
+    <!-- TRACE Logo — embedded image -->
+    <div class="trace-logo-wrap">
+      <img src="data:image/webp;base64,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" alt="TRACE Instrumentation Electrical" class="trace-logo-img"/>
+    </div>
+    </div>
+
+    <p class="landing-tag">Instrumentation &nbsp;|&nbsp; Electrical</p>
+
+    <p class="landing-desc">
+      Hello my little kittens,<br><br>
+      I have made this so you can have a little suss before you call me.<br><br>
+      Let me know if you want anything you're not smart enough to work out and I will add it for you.<br><br>
+      <strong>Meow xox</strong>
+    </p>
+
+    <div class="feature-pills">
+      <div class="pill">Calibration</div>
+      <div class="pill">TX Setup</div>
+      <div class="pill">Tube Bending</div>
+      <div class="pill">Fault Finding</div>
+      <div class="pill">Reference Library</div>
+    </div>
+
+    <button class="cta-btn" onclick="launchApp()">
+      Open Tools <span class="cta-arrow">→</span>
+    </button>
+
+    <hr class="landing-divider">
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+  <header class="app-header">
+    <div class="app-logo" onclick="goHome()" style="cursor:pointer;">
+      <div class="app-logo-icon">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Mini pipeline icon -->
+          <line x1="2" y1="18" x2="34" y2="18" stroke="#5cb85c" stroke-width="2"/>
+          <circle cx="10" cy="18" r="3" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+          <circle cx="26" cy="18" r="3" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+          <line x1="18" y1="10" x2="18" y2="26" stroke="#ffffff" stroke-width="1.5"/>
+          <circle cx="10" cy="18" r="1.2" fill="#5cb85c"/>
+          <circle cx="26" cy="18" r="1.2" fill="#5cb85c"/>
+        </svg>
+      </div>
+      <img src="data:image/webp;base64,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" alt="TRACE" class="header-logo-img"/>
+    </div>
+    <div class="app-status">
+      <span>ONLINE</span>
+      <div class="status-dot"></div>
+    </div>
+  </header>
+
+  <nav class="app-nav">
+    <div class="tab active" onclick="showTab('calibration',this)">Calibration</div>
+    <div class="tab" onclick="showTab('transmitters',this)">TX Setup</div>
+    <div class="tab" onclick="showTab('tubing',this)">Tube Bending</div>
+    <div class="tab" onclick="showTab('faults',this)">Fault Finding</div>
+    <div class="tab" onclick="showTab('reference',this)">Reference</div>
+  </nav>
+
+  <main class="app-main">
+
+
+
+<!-- CALIBRATION -->
+<div class="section active" id="section-calibration">
+  <div class="section-title">Instrument Calibration</div>
+  <div class="section-sub">4–20mA output, span, LRV/URV and 5-point tables</div>
+  <div class="card">
+    <div class="card-title">📡 Transmitter Output Calculator</div>
+    <div class="form-grid">
+      <div class="form-group"><label>LRV</label><input type="number" id="c_lrv" placeholder="e.g. 0"></div>
+      <div class="form-group"><label>URV</label><input type="number" id="c_urv" placeholder="e.g. 5000"></div>
+      <div class="form-group"><label>Engineering Unit</label><select id="c_unit"><option>mmH2O</option><option>mbar</option><option>bar</option><option>kPa</option><option>PSI</option><option>m</option><option>mm</option><option>%</option><option>degC</option><option>m3/h</option><option>L/min</option></select></div>
+      <div class="form-group"><label>Process Value (PV)</label><input type="number" id="c_pv" placeholder="current value"></div>
+    </div>
+    <button class="btn" onclick="calcTransmitter()">Calculate Output</button>
+    <div class="result-box" id="c_result"></div>
+    <div class="error-box" id="c_error"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">📊 5-Point Calibration Table</div>
+    <div class="form-grid">
+      <div class="form-group"><label>LRV</label><input type="number" id="ct_lrv" placeholder="e.g. 0"></div>
+      <div class="form-group"><label>URV</label><input type="number" id="ct_urv" placeholder="e.g. 100"></div>
+    </div>
+    <button class="btn" onclick="calcCalTable()">Generate Table</button>
+    <div class="result-box" id="ct_result"></div>
+    <div class="error-box" id="ct_error"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔁 mA to Engineering Value</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Measured mA</label><input type="number" id="ma_in" placeholder="e.g. 12.0" step=".01"></div>
+      <div class="form-group"><label>LRV</label><input type="number" id="ma_lrv" placeholder="e.g. 0"></div>
+      <div class="form-group"><label>URV</label><input type="number" id="ma_urv" placeholder="e.g. 100"></div>
+      <div class="form-group"><label>Unit</label><input type="text" id="ma_unit" placeholder="e.g. kPa"></div>
+    </div>
+    <button class="btn" onclick="calcMaReverse()">Convert</button>
+    <div class="result-box" id="ma_result"></div>
+    <div class="error-box" id="ma_error"></div>
+  </div>
+</div>
+
+<!-- TX SETUP -->
+<div class="section" id="section-transmitters">
+  <div class="section-title">Level TX Setup</div>
+  <div class="section-sub">Commissioning calculators and installation diagrams for level transmitters</div>
+  <div class="sub-tabs">
+    <div class="sub-tab active" onclick="showSubTab('tx','ultrasonic',this)">Ultrasonic / Radar</div>
+    <div class="sub-tab" onclick="showSubTab('tx','dp_level',this)">DP Level TX</div>
+    <div class="sub-tab" onclick="showSubTab('tx','pressure_level',this)">Pressure TX Level</div>
+    <div class="sub-tab" onclick="showSubTab('tx','guided_radar',this)">Guided Radar</div>
+  </div>
+
+  <!-- ULTRASONIC -->
+  <div class="sub-section active" id="tx-ultrasonic">
+    <div class="card">
+      <div class="card-title">📡 Ultrasonic / Non-Contact Radar</div>
+      <div class="info-banner">ℹ️ These instruments measure distance from sensor face downward. LRV = full tank (short distance), URV = empty tank (long distance). The sensor cannot see inside the dead band / blanking zone.</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Vessel Height (mm)</label><input type="number" id="us_height" placeholder="e.g. 3000"></div>
+        <div class="form-group"><label>Nozzle Extension above Vessel Top (mm)</label><input type="number" id="us_nozzle" placeholder="e.g. 200" value="0"></div>
+        <div class="form-group"><label>Dead Band / Blanking Distance (mm)</label><input type="number" id="us_deadband" placeholder="e.g. 300"></div>
+        <div class="form-group"><label>Min Usable Level from Bottom (mm)</label><input type="number" id="us_llll" placeholder="e.g. 100" value="0"></div>
+        <div class="form-group"><label>Max Usable Level from Bottom (mm)</label><input type="number" id="us_hlhl" placeholder="e.g. 2800"></div>
+      </div>
+      <button class="btn" onclick="calcUltrasonic()">Calculate Setup</button>
+      <div class="result-box" id="us_result"></div>
+      <div class="error-box" id="us_error"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📐 Installation Diagram</div>
+      <div class="diagram-box">
+        <div class="diagram-title">Ultrasonic / Non-Contact Radar — Measurement Principle</div>
+        <svg viewBox="0 0 420 430" xmlns="http://www.w3.org/2000/svg">
+          <rect x="110" y="70" width="180" height="290" rx="3" fill="none" stroke="#1e2d3d" stroke-width="2"/>
+          <rect x="104" y="68" width="12" height="294" fill="#1e2d3d"/><rect x="284" y="68" width="12" height="294" fill="#1e2d3d"/>
+          <rect x="104" y="358" width="192" height="8" fill="#1e2d3d"/>
+          <rect x="168" y="30" width="64" height="42" rx="4" fill="#1a2e1a" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="200" y="48" text-anchor="middle" fill="#f5a623" font-size="9" font-family="Share Tech Mono,monospace">ULTRASONIC</text>
+          <text x="200" y="60" text-anchor="middle" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">/ RADAR TX</text>
+          <rect x="186" y="70" width="28" height="10" fill="#1e2d3d"/>
+          <line x1="200" y1="80" x2="165" y2="220" stroke="#f5a623" stroke-width="1" stroke-dasharray="4,3" opacity=".7"/>
+          <line x1="200" y1="80" x2="235" y2="220" stroke="#f5a623" stroke-width="1" stroke-dasharray="4,3" opacity=".7"/>
+          <rect x="116" y="80" width="168" height="55" fill="rgba(224,82,82,.12)"/>
+          <line x1="116" y1="135" x2="284" y2="135" stroke="#e05252" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <rect x="116" y="230" width="168" height="128" fill="rgba(92,184,92,.14)"/>
+          <line x1="116" y1="230" x2="284" y2="230" stroke="#00c9a7" stroke-width="2"/>
+          <line x1="116" y1="320" x2="284" y2="320" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="80" y1="80" x2="80" y2="360" stroke="#6a9e6a" stroke-width="1"/>
+          <line x1="75" y1="80" x2="85" y2="80" stroke="#6a9e6a" stroke-width="1"/><line x1="75" y1="360" x2="85" y2="360" stroke="#6a9e6a" stroke-width="1"/>
+          <text x="58" y="225" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace" transform="rotate(-90,58,225)">VESSEL HEIGHT</text>
+          <text x="300" y="84" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">SENSOR FACE</text>
+          <text x="300" y="110" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">DEAD BAND</text>
+          <text x="300" y="122" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">(no measurement)</text>
+          <text x="300" y="139" fill="#e05252" font-size="7" font-family="Share Tech Mono,monospace">end of blanking zone</text>
+          <text x="300" y="234" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">LRV = full (4mA)</text>
+          <text x="300" y="244" fill="#00c9a7" font-size="7" font-family="Share Tech Mono,monospace">short distance</text>
+          <text x="300" y="324" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">URV = empty (20mA)</text>
+          <text x="300" y="334" fill="#f5a623" font-size="7" font-family="Share Tech Mono,monospace">long distance</text>
+          <text x="300" y="364" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">tank bottom</text>
+          <text x="200" y="415" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace">Programme: LRV distance = 4mA, URV distance = 20mA</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- DP LEVEL -->
+  <div class="sub-section" id="tx-dp_level">
+    <div class="card">
+      <div class="card-title">🔧 DP Level TX - Suppression and Elevation</div>
+      <div class="info-banner">ℹ️ For dry leg (open vessel) and wet leg (closed/pressurised vessel) configurations.</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Vessel Type</label><select id="dp_type" onchange="updateDPFields()"><option value="dry">Dry Leg (open / atmospheric)</option><option value="wet">Wet Leg (closed / pressurised)</option></select></div>
+        <div class="form-group"><label>Process Fluid SG</label><input type="number" id="dp_sg" placeholder="e.g. 1.0" step=".01" value="1.0"></div>
+        <div class="form-group"><label>Measurement Span (mm)</label><input type="number" id="dp_span" placeholder="e.g. 1500"></div>
+        <div class="form-group"><label>TX Height Below HP Tap (mm)</label><input type="number" id="dp_txoff" placeholder="e.g. 0" value="0"></div>
+        <div class="form-group" id="dp_wetleg_grp" style="display:none;"><label>Wet Leg Fluid SG</label><input type="number" id="dp_wetsg" placeholder="e.g. 1.0" step=".01" value="1.0"></div>
+        <div class="form-group" id="dp_wetleg_h_grp" style="display:none;"><label>Wet Leg Fill Height (mm)</label><input type="number" id="dp_weth" placeholder="e.g. 2000"></div>
+      </div>
+      <button class="btn" onclick="calcDPLevel()">Calculate LRV / URV</button>
+      <div class="result-box" id="dp_result"></div>
+      <div class="error-box" id="dp_error"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📐 DP Level Diagrams</div>
+      <div class="sub-tabs" style="margin-bottom:10px;">
+        <div class="sub-tab active" onclick="showDPDiagram('dry',this)">Dry Leg</div>
+        <div class="sub-tab" onclick="showDPDiagram('wet',this)">Wet Leg</div>
+      </div>
+      <div class="diagram-box" id="dp_diag_dry">
+        <div class="diagram-title">Dry Leg DP Level (Open Vessel)</div>
+        <svg viewBox="0 0 430 430" xmlns="http://www.w3.org/2000/svg">
+          <rect x="110" y="50" width="170" height="290" rx="3" fill="none" stroke="#1e2d3d" stroke-width="2"/>
+          <rect x="104" y="48" width="12" height="294" fill="#1e2d3d"/><rect x="274" y="48" width="12" height="294" fill="#1e2d3d"/>
+          <rect x="104" y="338" width="182" height="8" fill="#1e2d3d"/>
+          <text x="195" y="42" text-anchor="middle" fill="#6a9e6a" font-size="9" font-family="Share Tech Mono,monospace">OPEN TO ATMOSPHERE</text>
+          <rect x="116" y="150" width="158" height="188" fill="rgba(92,184,92,.14)"/>
+          <line x1="116" y1="150" x2="274" y2="150" stroke="#00c9a7" stroke-width="2"/>
+          <line x1="116" y1="110" x2="274" y2="110" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="116" y1="300" x2="274" y2="300" stroke="#e05252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <circle cx="116" cy="310" r="6" fill="#f5a623"/>
+          <text x="55" y="314" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">HP TAP</text>
+          <text x="55" y="324" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">(bottom)</text>
+          <circle cx="116" cy="80" r="6" fill="#00c9a7"/>
+          <text x="50" y="77" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">LP TAP</text>
+          <text x="40" y="87" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">(open air)</text>
+          <rect x="295" y="270" width="70" height="44" rx="4" fill="#1a2e1a" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="330" y="289" text-anchor="middle" fill="#f5a623" font-size="9" font-family="Share Tech Mono,monospace">DP TX</text>
+          <text x="330" y="302" text-anchor="middle" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">HP / LP</text>
+          <line x1="116" y1="310" x2="295" y2="291" stroke="#f5a623" stroke-width="1.5"/>
+          <line x1="116" y1="80" x2="295" y2="276" stroke="#00c9a7" stroke-width="1.5" stroke-dasharray="5,2"/>
+          <text x="290" y="114" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">URV = 100% (full)</text>
+          <text x="290" y="304" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">LRV = 0% (empty)</text>
+          <text x="290" y="154" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">current level</text>
+          <line x1="92" y1="110" x2="92" y2="300" stroke="#6a9e6a" stroke-width="1"/>
+          <line x1="87" y1="110" x2="97" y2="110" stroke="#6a9e6a" stroke-width="1"/><line x1="87" y1="300" x2="97" y2="300" stroke="#6a9e6a" stroke-width="1"/>
+          <text x="70" y="210" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace" transform="rotate(-90,70,210)">SPAN</text>
+          <text x="215" y="415" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace">HP line fills with process fluid — suppress zero if TX is below HP tap</text>
+        </svg>
+      </div>
+      <div class="diagram-box" id="dp_diag_wet" style="display:none;">
+        <div class="diagram-title">Wet Leg DP Level (Closed / Pressurised Vessel)</div>
+        <svg viewBox="0 0 430 430" xmlns="http://www.w3.org/2000/svg">
+          <rect x="110" y="50" width="170" height="290" rx="3" fill="none" stroke="#1e2d3d" stroke-width="2"/>
+          <rect x="104" y="48" width="12" height="294" fill="#1e2d3d"/><rect x="274" y="48" width="12" height="294" fill="#1e2d3d"/>
+          <rect x="104" y="338" width="182" height="8" fill="#1e2d3d"/>
+          <rect x="104" y="44" width="182" height="8" fill="#1e2d3d"/>
+          <text x="195" y="36" text-anchor="middle" fill="#e05252" font-size="9" font-family="Share Tech Mono,monospace">CLOSED / PRESSURISED</text>
+          <rect x="116" y="56" width="158" height="100" fill="rgba(224,82,82,.07)"/>
+          <text x="195" y="110" text-anchor="middle" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">VAPOUR SPACE</text>
+          <rect x="116" y="156" width="158" height="182" fill="rgba(92,184,92,.14)"/>
+          <line x1="116" y1="156" x2="274" y2="156" stroke="#00c9a7" stroke-width="2"/>
+          <line x1="116" y1="115" x2="274" y2="115" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="116" y1="305" x2="274" y2="305" stroke="#e05252" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <circle cx="116" cy="316" r="6" fill="#f5a623"/>
+          <text x="50" y="320" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">HP TAP</text>
+          <circle cx="116" cy="56" r="6" fill="#00c9a7"/>
+          <text x="40" y="53" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">LP TAP</text>
+          <rect x="96" y="56" width="10" height="260" fill="rgba(0,201,167,.22)" stroke="#00c9a7" stroke-width="1"/>
+          <text x="72" y="188" fill="#00c9a7" font-size="7" font-family="Share Tech Mono,monospace" transform="rotate(-90,72,188)">WET LEG FILLED</text>
+          <rect x="295" y="270" width="70" height="44" rx="4" fill="#1a2e1a" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="330" y="289" text-anchor="middle" fill="#f5a623" font-size="9" font-family="Share Tech Mono,monospace">DP TX</text>
+          <text x="330" y="302" text-anchor="middle" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">HP / LP</text>
+          <line x1="116" y1="316" x2="295" y2="291" stroke="#f5a623" stroke-width="1.5"/>
+          <line x1="96" y1="316" x2="295" y2="278" stroke="#00c9a7" stroke-width="1.5"/>
+          <text x="290" y="119" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">URV = 100%</text>
+          <text x="290" y="309" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">LRV = 0%</text>
+          <text x="290" y="160" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">current level</text>
+          <text x="215" y="415" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace">Wet leg = constant LP head. TX needs elevation (negative LRV in mmH2O)</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRESSURE TX LEVEL -->
+  <div class="sub-section" id="tx-pressure_level">
+    <div class="card">
+      <div class="card-title">📊 Hydrostatic Pressure TX Level</div>
+      <div class="info-banner">ℹ️ Bottom-mounted or submersible pressure transmitter. Measures head pressure directly. P = SG x height x 0.0981 (mbar). LRV = 0 (empty), URV = full head.</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Tank Height / Span (mm)</label><input type="number" id="pt_height" placeholder="e.g. 2000"></div>
+        <div class="form-group"><label>Fluid SG</label><input type="number" id="pt_sg" placeholder="e.g. 1.0" step=".01" value="1.0"></div>
+        <div class="form-group"><label>TX Mount</label><select id="pt_mount"><option value="flush">Flush with tank bottom</option><option value="below">TX below tank bottom</option></select></div>
+        <div class="form-group"><label>TX Below Tank Bottom (mm)</label><input type="number" id="pt_below" placeholder="e.g. 200" value="0"></div>
+        <div class="form-group"><label>Output Unit</label><select id="pt_unit"><option value="mmH2O">mmH2O</option><option value="mbar">mbar</option><option value="kPa">kPa</option><option value="bar">bar</option><option value="PSI">PSI</option></select></div>
+      </div>
+      <button class="btn" onclick="calcPressureLevel()">Calculate</button>
+      <div class="result-box" id="pt_result"></div>
+      <div class="error-box" id="pt_error"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📐 Installation Diagram</div>
+      <div class="diagram-box">
+        <div class="diagram-title">Hydrostatic Pressure TX - Bottom Mount</div>
+        <svg viewBox="0 0 410 410" xmlns="http://www.w3.org/2000/svg">
+          <rect x="110" y="50" width="170" height="270" rx="3" fill="none" stroke="#1e2d3d" stroke-width="2"/>
+          <rect x="104" y="48" width="12" height="274" fill="#1e2d3d"/><rect x="274" y="48" width="12" height="274" fill="#1e2d3d"/>
+          <rect x="104" y="318" width="182" height="8" fill="#1e2d3d"/>
+          <text x="195" y="42" text-anchor="middle" fill="#6a9e6a" font-size="9" font-family="Share Tech Mono,monospace">OPEN TO ATMOSPHERE</text>
+          <rect x="116" y="160" width="158" height="158" fill="rgba(92,184,92,.14)"/>
+          <line x1="116" y1="160" x2="274" y2="160" stroke="#00c9a7" stroke-width="2"/>
+          <line x1="116" y1="90" x2="274" y2="90" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="116" y1="318" x2="274" y2="318" stroke="#e05252" stroke-width="1.5"/>
+          <rect x="155" y="326" width="80" height="36" rx="4" fill="#1a2e1a" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="195" y="341" text-anchor="middle" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">PRESSURE TX</text>
+          <text x="195" y="354" text-anchor="middle" fill="#6a9e6a" font-size="7" font-family="Share Tech Mono,monospace">flush / submersible</text>
+          <line x1="295" y1="90" x2="295" y2="318" stroke="#00c9a7" stroke-width="1.5"/>
+          <line x1="290" y1="90" x2="300" y2="90" stroke="#00c9a7" stroke-width="1.5"/><line x1="290" y1="318" x2="300" y2="318" stroke="#00c9a7" stroke-width="1.5"/>
+          <text x="310" y="210" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace" transform="rotate(90,310,210)">URV HEAD PRESSURE</text>
+          <text x="284" y="94" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">URV = full</text>
+          <text x="284" y="322" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">LRV = 0</text>
+          <text x="284" y="164" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">level</text>
+          <text x="195" y="395" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace">URV(mbar) = Height(mm) x SG x 0.0981 | LRV = 0 or suppress if TX below bottom</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- GWR -->
+  <div class="sub-section" id="tx-guided_radar">
+    <div class="card">
+      <div class="card-title">📡 Guided Wave Radar (GWR)</div>
+      <div class="info-banner">ℹ️ GWR probes measure distance from the flange face downward. Works in vapour, foam and high-pressure. LRV = full (short distance from flange), URV = empty (long distance). Blocking zones at top and bottom must be avoided.</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Probe Length (mm)</label><input type="number" id="gwr_probe" placeholder="e.g. 3000"></div>
+        <div class="form-group"><label>Flange to Max Level / Top Block (mm)</label><input type="number" id="gwr_top_block" placeholder="e.g. 250" value="250"></div>
+        <div class="form-group"><label>Bottom Dead Zone (mm from probe tip)</label><input type="number" id="gwr_bot_block" placeholder="e.g. 100" value="100"></div>
+        <div class="form-group"><label>Process Fluid SG</label><input type="number" id="gwr_sg" placeholder="e.g. 0.8" step=".01" value="1.0"></div>
+      </div>
+      <button class="btn" onclick="calcGWR()">Calculate Setup</button>
+      <div class="result-box" id="gwr_result"></div>
+      <div class="error-box" id="gwr_error"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📐 GWR Installation Diagram</div>
+      <div class="diagram-box">
+        <div class="diagram-title">Guided Wave Radar - Probe Zones</div>
+        <svg viewBox="0 0 420 430" xmlns="http://www.w3.org/2000/svg">
+          <rect x="162" y="20" width="76" height="26" rx="3" fill="#1a2e1a" stroke="#f5a623" stroke-width="1.5"/>
+          <text x="200" y="37" text-anchor="middle" fill="#f5a623" font-size="9" font-family="Share Tech Mono,monospace">GWR FLANGE</text>
+          <rect x="126" y="46" width="14" height="300" fill="#1e2d3d"/>
+          <rect x="260" y="46" width="14" height="300" fill="#1e2d3d"/>
+          <rect x="126" y="344" width="148" height="8" fill="#1e2d3d"/>
+          <line x1="200" y1="46" x2="200" y2="350" stroke="#c8d6e5" stroke-width="3"/>
+          <rect x="132" y="46" width="136" height="50" fill="rgba(224,82,82,.13)"/>
+          <line x1="132" y1="96" x2="268" y2="96" stroke="#e05252" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <rect x="132" y="310" width="136" height="34" fill="rgba(224,82,82,.13)"/>
+          <line x1="132" y1="310" x2="268" y2="310" stroke="#e05252" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <rect x="132" y="170" width="136" height="140" fill="rgba(92,184,92,.14)"/>
+          <line x1="132" y1="170" x2="268" y2="170" stroke="#00c9a7" stroke-width="2"/>
+          <line x1="132" y1="98" x2="268" y2="98" stroke="#00c9a7" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <line x1="132" y1="308" x2="268" y2="308" stroke="#f5a623" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <text x="285" y="68" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">TOP BLOCK</text>
+          <text x="285" y="78" fill="#e05252" font-size="7" font-family="Share Tech Mono,monospace">ZONE (no meas)</text>
+          <text x="285" y="100" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">LRV (4mA)</text>
+          <text x="285" y="110" fill="#00c9a7" font-size="7" font-family="Share Tech Mono,monospace">FULL = near flange</text>
+          <text x="285" y="174" fill="#00c9a7" font-size="8" font-family="Share Tech Mono,monospace">current level</text>
+          <text x="285" y="312" fill="#f5a623" font-size="8" font-family="Share Tech Mono,monospace">URV (20mA)</text>
+          <text x="285" y="322" fill="#f5a623" font-size="7" font-family="Share Tech Mono,monospace">EMPTY = near tip</text>
+          <text x="285" y="330" fill="#e05252" font-size="8" font-family="Share Tech Mono,monospace">BOTTOM DEAD</text>
+          <text x="285" y="340" fill="#e05252" font-size="7" font-family="Share Tech Mono,monospace">ZONE</text>
+          <line x1="112" y1="98" x2="112" y2="308" stroke="#6a9e6a" stroke-width="1"/>
+          <line x1="107" y1="98" x2="117" y2="98" stroke="#6a9e6a" stroke-width="1"/><line x1="107" y1="308" x2="117" y2="308" stroke="#6a9e6a" stroke-width="1"/>
+          <text x="90" y="208" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace" transform="rotate(-90,90,208)">ACTIVE ZONE</text>
+          <text x="200" y="415" text-anchor="middle" fill="#6a9e6a" font-size="8" font-family="Share Tech Mono,monospace">LRV distance (short) = 4mA full | URV distance (long) = 20mA empty</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TUBE BENDING -->
+<div class="section" id="section-tubing">
+  <div class="section-title">Tube Bending</div>
+  <div class="section-sub">Swagelok / Parker — reference diagram shown first, then enter your values</div>
+  <div class="sub-tabs">
+    <div class="sub-tab active" onclick="showSubTab('tb','simple90',this)">90°</div>
+    <div class="sub-tab" onclick="showSubTab('tb','offset',this)">Simple Offset</div>
+    <div class="sub-tab" onclick="showSubTab('tb','pred_offset',this)">Predictive</div>
+    <div class="sub-tab" onclick="showSubTab('tb','parallel',this)">Parallel</div>
+    <div class="sub-tab" onclick="showSubTab('tb','longrun',this)">Long Run</div>
+    <div class="sub-tab" onclick="showSubTab('tb','joint',this)">Joint Offset</div>
+    <div class="sub-tab" onclick="showSubTab('tb','saddle',this)">Saddle</div>
+    <div class="sub-tab" onclick="showSubTab('tb','roll_offset',this)">Rolling</div>
+    <div class="sub-tab" onclick="showSubTab('tb','return',this)">Return</div>
+    <div class="sub-tab" onclick="showSubTab('tb','fall',this)">Fall Calc</div>
+    <div class="sub-tab" onclick="showSubTab('tb','cutlen',this)">Cut Length</div>
+    <div class="sub-tab" onclick="showSubTab('tb','reference',this)">Ref Table</div>
+  </div>
+
+  <!-- ═══ 90 DEG ═══ -->
+  <!-- ═══ 90 DEG ═══ -->
+  <div class="sub-section active" id="tb-simple90">
+    <div class="card">
+      <div class="card-title">📐 90° Single Bend</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_s90" viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="130" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">SELECT TUBE SIZE AND ENTER DISTANCE</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="s90_od" onchange="s90Calc()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Measure To — end to back of bend (mm)</label><input type="number" id="s90_dist" placeholder="e.g. 150" oninput="s90Calc()"></div>
+      </div>
+      <div class="result-box" id="s90_result"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SIMPLE OFFSET ═══ -->
+  <div class="sub-section" id="tb-offset">
+    <div class="card">
+      <div class="card-title">↕️ Simple Offset — Two 45° Bends</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_so" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="120" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="so_od" onchange="soCalc()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Offset — side shift (mm)</label><input type="number" id="so_offset" placeholder="e.g. 80" oninput="soCalc()"></div>
+        <div class="form-group"><label>Measure To M1 — end to 1st bend (mm)</label><input type="number" id="so_start" placeholder="e.g. 100" oninput="soCalc()"></div>
+      </div>
+      <div class="result-box" id="so_result"></div>
+    </div>
+  </div>
+
+  <!-- ═══ PREDICTIVE OFFSET ═══ -->
+  <div class="sub-section" id="tb-pred_offset">
+    <div class="card">
+      <div class="card-title">🎯 Predictive Offset — Any Angle</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_po" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="120" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="po_od" onchange="poCalc()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Bend Angle (° each bend)</label><input type="number" id="po_angle" placeholder="e.g. 30" min="5" max="89" oninput="poCalc()"></div>
+        <div class="form-group"><label>Offset — side shift (mm)</label><input type="number" id="po_offset" placeholder="e.g. 120" oninput="poCalc()"></div>
+        <div class="form-group"><label>Measure To M1 — end to 1st bend (mm)</label><input type="number" id="po_start" placeholder="e.g. 150" oninput="poCalc()"></div>
+      </div>
+      <div class="result-box" id="po_result"></div>
+    </div>
+  </div>
+
+  <!-- ═══ PARALLEL OFFSET ═══ -->
+  <div class="sub-section" id="tb-parallel">
+    <div class="card">
+      <div class="card-title">⇉ Parallel Offset</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_par" viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="130" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="par_od" onchange="parCalc()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Centre-to-Centre Gap (mm)</label><input type="number" id="par_gap" placeholder="e.g. 70" oninput="parCalc()"></div>
+        <div class="form-group"><label>Bend Angle (° each bend)</label><input type="number" id="par_angle" placeholder="45" value="45" min="5" max="89" oninput="parCalc()"></div>
+        <div class="form-group"><label>Measure To M1 (mm)</label><input type="number" id="par_start" placeholder="e.g. 120" oninput="parCalc()"></div>
+      </div>
+      <div class="result-box" id="par_result"></div>
+    </div>
+  </div>
+
+  <!-- ═══ LONG RUN OFFSET ═══ -->
+  <div class="sub-section" id="tb-longrun">
+    <div class="card">
+      <div class="card-title">↔️ Long Run Offset — 4 Bends</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_lr" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="120" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="lr_od"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Offset — side shift (mm)</label><input type="number" id="lr_offset" placeholder="e.g. 100"></div>
+        <div class="form-group"><label>Bend Angle (° each bend)</label><input type="number" id="lr_angle" placeholder="45" value="45" min="5" max="89"></div>
+        <div class="form-group"><label>Middle Run Length (mm)</label><input type="number" id="lr_middle" placeholder="e.g. 300"></div>
+        <div class="form-group"><label>Measure To M1 (mm)</label><input type="number" id="lr_start" placeholder="e.g. 150"></div>
+      </div>
+      <button class="btn" onclick="calcLongRun()">Calculate</button>
+      <div class="result-box" id="lr_result"></div>
+      <div class="error-box" id="lr_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ JOINT OFFSET ═══ -->
+  <div class="sub-section" id="tb-joint">
+    <div class="card">
+      <div class="card-title">🔗 Joint Offset</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_jo" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="120" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="jo_od"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Offset Between Fittings (mm)</label><input type="number" id="jo_offset" placeholder="e.g. 60"></div>
+        <div class="form-group"><label>Bend Angle (° each bend)</label><input type="number" id="jo_angle" placeholder="45" value="45" min="5" max="89"></div>
+        <div class="form-group"><label>Fitting Face to Face Distance (mm)</label><input type="number" id="jo_span" placeholder="e.g. 400"></div>
+        <div class="form-group"><label>Fitting Insertion Depth — each end (mm)</label><input type="number" id="jo_insert" placeholder="e.g. 8" value="0"></div>
+      </div>
+      <button class="btn" onclick="calcJointOffset()">Calculate</button>
+      <div class="result-box" id="jo_result"></div>
+      <div class="error-box" id="jo_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ SADDLE ═══ -->
+  <div class="sub-section" id="tb-saddle">
+    <div class="card">
+      <div class="card-title">🏔️ Saddle — 3-Bend Obstacle</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_sad" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="120" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="sad_od" onchange="calcSaddle()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Obstacle Height — H (mm)</label><input type="number" id="sad_height" placeholder="e.g. 60" oninput="calcSaddle()"></div>
+        <div class="form-group"><label>Side Bend Angle</label><select id="sad_angle" onchange="calcSaddle()"><option value="22.5">22.5° (centre = 45°)</option><option value="30">30° (centre = 60°)</option><option value="45" selected>45° (centre = 90°)</option></select></div>
+        <div class="form-group"><label>Measure To M1 (mm)</label><input type="number" id="sad_start" placeholder="e.g. 200" oninput="calcSaddle()"></div>
+      </div>
+      <div class="result-box" id="sad_result"></div>
+      <div class="error-box" id="sad_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ ROLLING OFFSET ═══ -->
+  <div class="sub-section" id="tb-roll_offset">
+    <div class="card">
+      <div class="card-title">🔄 Rolling Offset — 3D Shift</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_ro" viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="130" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="ro_od"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Run — horizontal shift (mm)</label><input type="number" id="ro_run" placeholder="e.g. 100"></div>
+        <div class="form-group"><label>Rise — vertical shift (mm)</label><input type="number" id="ro_rise" placeholder="e.g. 80"></div>
+        <div class="form-group"><label>Measure To M1 (mm)</label><input type="number" id="ro_start" placeholder="e.g. 150"></div>
+      </div>
+      <button class="btn" onclick="calcRollingOffset()">Calculate</button>
+      <div class="result-box" id="ro_result"></div>
+      <div class="error-box" id="ro_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ RETURN BEND ═══ -->
+  <div class="sub-section" id="tb-return">
+    <div class="card">
+      <div class="card-title">↩️ Return Bend — U-Bend / 180°</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_ret" viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="110" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Tube OD</label><select id="ret_od" onchange="retCalc()"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option><option value="6.35">¼"</option><option value="9.53">⅜"</option><option value="12.7">½"</option></select></div>
+        <div class="form-group"><label>Measure To M1 — end to bend start (mm)</label><input type="number" id="ret_dist" placeholder="e.g. 200" oninput="retCalc()"></div>
+      </div>
+      <div class="result-box" id="ret_result"></div>
+    </div>
+  </div>
+
+  <!-- ═══ FALL CALC ═══ -->
+  <div class="sub-section" id="tb-fall">
+    <div class="card">
+      <div class="card-title">📉 Fall / Gradient Calculator</div>
+      <div class="diagram-box" style="background:#060d06;border-color:#0d1a26;">
+        <svg id="svg_fall" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+          <text x="250" y="100" text-anchor="middle" fill="#1e2d3d" font-size="13" font-family="Share Tech Mono,monospace">ENTER VALUES TO SEE DIAGRAM</text>
+        </svg>
+      </div>
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-group"><label>Run — horizontal pipe length (mm)</label><input type="number" id="fl_run" placeholder="e.g. 3000"></div>
+        <div class="form-group"><label>Fall — vertical drop (mm) — leave blank to calc</label><input type="number" id="fl_fall" placeholder="leave blank to calculate"></div>
+        <div class="form-group"><label>Angle (°) — leave blank to calc</label><input type="number" id="fl_angle" placeholder="leave blank to calculate" step="0.01"></div>
+        <div class="form-group"><label>Standard Gradient</label>
+          <select id="fl_grad">
+            <option value="">-- or pick standard gradient --</option>
+            <option value="100">1:100 (10mm/m) — instrument lines</option>
+            <option value="50">1:50 (20mm/m) — drain lines</option>
+            <option value="40">1:40 (25mm/m) — condensate</option>
+            <option value="200">1:200 (5mm/m) — shallow grade</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" onclick="calcFall()">Calculate</button>
+      <div class="result-box" id="fl_result"></div>
+      <div class="error-box" id="fl_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ CUT LENGTH ═══ -->
+  <div class="sub-section" id="tb-cutlen">
+    <div class="card">
+      <div class="card-title">✂️ Cut Length Calculator</div>
+      <div class="form-grid">
+        <div class="form-group"><label>Total Run Length (mm)</label><input type="number" id="cl_run" placeholder="e.g. 800"></div>
+        <div class="form-group"><label>Number of 90° Bends</label><input type="number" id="cl_b90" placeholder="0" min="0" value="0"></div>
+        <div class="form-group"><label>Number of 45° Bends</label><input type="number" id="cl_b45" placeholder="0" min="0" value="0"></div>
+        <div class="form-group"><label>Tube OD</label><select id="cl_od"><option value="6">6mm</option><option value="8">8mm</option><option value="10">10mm</option><option value="12" selected>12mm</option><option value="16">16mm</option></select></div>
+        <div class="form-group"><label>Fitting Insertion — each end (mm)</label><input type="number" id="cl_fit" placeholder="e.g. 8" value="0"></div>
+      </div>
+      <button class="btn" onclick="calcCutLength()">Calculate</button>
+      <div class="result-box" id="cl_result"></div>
+      <div class="error-box" id="cl_error"></div>
+    </div>
+  </div>
+
+  <!-- ═══ BEND REF ═══ -->
+  <div class="sub-section" id="tb-reference">
+    <div class="card">
+      <div class="card-title">📏 Swagelok Bend Radius Reference</div>
+      <table class="ref-table">
+        <thead><tr><th>Tube OD</th><th>Min Bend Radius</th><th>Gain / 90°</th><th>Gain / 45°</th><th>Bender</th></tr></thead>
+        <tbody>
+          <tr><td>6mm / ¼"</td><td>19mm</td><td>10mm</td><td>5mm</td><td>MS-HTB-4 / 6M-B</td></tr>
+          <tr><td>8mm / 5/16"</td><td>22mm</td><td>12mm</td><td>6mm</td><td>MS-HTB-5 / 8M-B</td></tr>
+          <tr><td>10mm / ⅜"</td><td>29mm</td><td>15mm</td><td>7.5mm</td><td>MS-HTB-6 / 10M-B</td></tr>
+          <tr><td>12mm / ½"</td><td>38mm</td><td>19mm</td><td>9.5mm</td><td>MS-HTB-8 / 12M-B</td></tr>
+          <tr><td>16mm / ⅝"</td><td>51mm</td><td>25mm</td><td>12.5mm</td><td>MS-HTB-10 / 16M-B</td></tr>
+        </tbody>
+      </table>
+      <div class="info-banner" style="margin-top:8px;">Gain = tube arc consumed by bend. Subtract from run before cutting. 45° gain = 90° gain ÷ 2.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔧 Field Tips</div>
+      <div style="font-size:.85rem;color:var(--text);line-height:1.8;">
+        <p style="margin-bottom:6px;">Mark with a fine pen — thick lines = ±0.5mm error per mark</p>
+        <p style="margin-bottom:6px;">Align the <strong style="color:var(--accent)">BACK OF BEND arrow</strong> with your mark, not the front</p>
+        <p style="margin-bottom:6px;">For all offset bends — rotate exactly 180° between marks. Use a spirit level or laser</p>
+        <p style="margin-bottom:6px;">Rolling offsets — set roll angle with a digital protractor before every bend</p>
+        <p style="margin-bottom:6px;">Allow 3–5mm extra on first cuts — you can trim, you cannot add</p>
+        <p>Stainless work-hardens — one smooth motion per bend, never rock back and forth</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FAULT FINDING -->
+<div class="section" id="section-faults">
+  <div class="section-title">Fault Finding</div>
+  <div class="section-sub">Diagnostic steps for common E&I faults</div>
+  <div class="card">
+    <div class="card-title">📡 Transmitter / Loop Faults</div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Transmitter stuck at 0% / 4mA<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Check supply voltage at terminals - should be 12 to 36VDC. Low voltage = loop power issue.</div></div><div class="fault-step"><div class="step-num">2</div><div>Measure mA in series. 0mA or less than 3.6mA = open circuit or hardware fault.</div></div><div class="fault-step"><div class="step-num">3</div><div>Check cable continuity and terminal connections for open circuit.</div></div><div class="fault-step"><div class="step-num">4</div><div>Check process - is actual PV at or below LRV? Instrument may be reading correctly.</div></div><div class="fault-step"><div class="step-num">5</div><div>DP transmitters: check manifold valves and impulse lines for blockages.</div></div></div></div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Transmitter pegged high / 20mA+<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Verify process value independently - is vessel actually full?</div></div><div class="fault-step"><div class="step-num">2</div><div>DP: check for blocked HP impulse line - blocked high side reads high.</div></div><div class="fault-step"><div class="step-num">3</div><div>Review URV - may be set too low for current process range.</div></div><div class="fault-step"><div class="step-num">4</div><div>Check for short on sensing element - can drive output to saturation.</div></div></div></div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Noisy or erratic signal<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Shield grounded at ONE end only - dual grounding causes ground loops and noise.</div></div><div class="fault-step"><div class="step-num">2</div><div>Cable routed near VFDs, contactors or HV cables - reroute or use SWA cable.</div></div><div class="fault-step"><div class="step-num">3</div><div>Inspect all terminals for loose connections or corrosion.</div></div><div class="fault-step"><div class="step-num">4</div><div>Increase transmitter damping - 1 to 5 seconds is a typical starting point.</div></div></div></div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">HART communication failure<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Loop resistance must be 230 to 1100 ohm. Add resistor if DCS input is too low.</div></div><div class="fault-step"><div class="step-num">2</div><div>Confirm supply voltage is at least 12VDC at device under load.</div></div><div class="fault-step"><div class="step-num">3</div><div>Long cable runs over 1.5km attenuate HART signal - use a HART repeater.</div></div><div class="fault-step"><div class="step-num">4</div><div>Verify HART revision - some DCS cards only support HART 5 not HART 7.</div></div></div></div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Temperature TX reading wrong<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Verify TC type matches TX config - J, K, T, E type mismatch causes large offset errors.</div></div><div class="fault-step"><div class="step-num">2</div><div>Check CJC - cold junction compensation sensor fault offsets all readings.</div></div><div class="fault-step"><div class="step-num">3</div><div>Extension cable must match TC type - copper cable introduces junction errors.</div></div><div class="fault-step"><div class="step-num">4</div><div>RTD: check 2/3/4-wire config matches. 2-wire adds lead resistance error.</div></div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔌 Control Valve / Actuator</div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Valve not responding to signal<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Confirm 4 to 20mA signal reaching positioner - measure at positioner terminals.</div></div><div class="fault-step"><div class="step-num">2</div><div>Check instrument air - clean, dry, regulated at 1.4 to 5.5 bar.</div></div><div class="fault-step"><div class="step-num">3</div><div>Stroke manually if safe to do so - determines if mechanical or signal fault.</div></div><div class="fault-step"><div class="step-num">4</div><div>Check I/P output with gauge - should track 0.2 to 1.0 bar for 4 to 20mA input.</div></div></div></div>
+    <div class="fault-item"><div class="fault-q" onclick="toggleFault(this)">Valve hunting or oscillating<span class="chevron">▼</span></div><div class="fault-ans"><div class="fault-step"><div class="step-num">1</div><div>Check PID tuning - reduce gain or increase integral time. Hunting usually means over-tuned loop.</div></div><div class="fault-step"><div class="step-num">2</div><div>Reduce positioner proportional gain via configuration.</div></div><div class="fault-step"><div class="step-num">3</div><div>Check for air supply pressure fluctuations.</div></div><div class="fault-step"><div class="step-num">4</div><div>Inspect for mechanical backlash in linkage or stem - excessive play causes oscillation.</div></div></div></div>
+  </div>
+</div>
+
+<!-- REFERENCE -->
+<div class="section" id="section-reference">
+  <div class="section-title">Reference Library</div>
+  <div class="section-sub">Standard values, codes and signal ranges</div>
+  <div class="ref-category">4-20mA NAMUR NE43</div>
+  <table class="ref-table"><thead><tr><th>Range</th><th>Status</th><th>Meaning</th></tr></thead><tbody>
+    <tr><td><span class="tag">3.6 to 3.8 mA</span></td><td><span class="tag red">FAULT LOW</span></td><td>Sensor or circuit failure</td></tr>
+    <tr><td><span class="tag">4.0 mA</span></td><td><span class="tag green">OK</span></td><td>0% LRV</td></tr>
+    <tr><td><span class="tag">12.0 mA</span></td><td><span class="tag green">OK</span></td><td>50% of range</td></tr>
+    <tr><td><span class="tag">20.0 mA</span></td><td><span class="tag green">OK</span></td><td>100% URV</td></tr>
+    <tr><td><span class="tag">20.5 to 21.0 mA</span></td><td><span class="tag red">ALARM</span></td><td>Over-range</td></tr>
+    <tr><td><span class="tag">above 21.0 mA</span></td><td><span class="tag red">FAULT HIGH</span></td><td>Hardware failure</td></tr>
+  </tbody></table>
+  <div class="ref-category">Thermocouple Types (IEC 60584)</div>
+  <table class="ref-table"><thead><tr><th>Type</th><th>Materials</th><th>Range</th><th>Sensitivity</th></tr></thead><tbody>
+    <tr><td><span class="tag">K</span></td><td>NiCr / NiAl</td><td>-200 to 1260 degC</td><td>41 uV/degC</td></tr>
+    <tr><td><span class="tag">J</span></td><td>Fe / CuNi</td><td>-40 to 750 degC</td><td>52 uV/degC</td></tr>
+    <tr><td><span class="tag">T</span></td><td>Cu / CuNi</td><td>-200 to 350 degC</td><td>43 uV/degC</td></tr>
+    <tr><td><span class="tag">E</span></td><td>NiCr / CuNi</td><td>-200 to 900 degC</td><td>68 uV/degC</td></tr>
+    <tr><td><span class="tag">R</span></td><td>Pt13Rh / Pt</td><td>0 to 1600 degC</td><td>10 uV/degC</td></tr>
+  </tbody></table>
+  <div class="ref-category">RTD (IEC 60751)</div>
+  <table class="ref-table"><thead><tr><th>Type</th><th>R at 0 degC</th><th>Range</th><th>Alpha</th></tr></thead><tbody>
+    <tr><td><span class="tag">PT100</span></td><td>100 ohm</td><td>-200 to 850 degC</td><td>0.00385</td></tr>
+    <tr><td><span class="tag">PT1000</span></td><td>1000 ohm</td><td>-200 to 850 degC</td><td>0.00385</td></tr>
+  </tbody></table>
+  <div class="ref-category">IP Ratings</div>
+  <table class="ref-table"><thead><tr><th>Rating</th><th>Dust</th><th>Water</th><th>Use</th></tr></thead><tbody>
+    <tr><td><span class="tag">IP54</span></td><td>Protected</td><td>Splash</td><td>Indoor panels</td></tr>
+    <tr><td><span class="tag">IP65</span></td><td>Dust tight</td><td>Water jets</td><td>Outdoor</td></tr>
+    <tr><td><span class="tag">IP66</span></td><td>Dust tight</td><td>Powerful jets</td><td>Wash-down areas</td></tr>
+    <tr><td><span class="tag">IP67</span></td><td>Dust tight</td><td>1m / 30min</td><td>Wet / underground</td></tr>
+    <tr><td><span class="tag">IP68</span></td><td>Dust tight</td><td>Continuous immersion</td><td>Submerged sensors</td></tr>
+  </tbody></table>
+</div>
+
+
+  </main>
+</div>
+
+<script>
+// ─── LANDING ───────────────────────────────
+function launchApp(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').classList.add('visible');
+  window.scrollTo(0,0);
+}
+function goHome(){
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('landing').style.display='flex';
+  window.scrollTo(0,0);
+}
+
+// ─── NAV ───────────────────────────────────
+function showTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('section-'+name).classList.add('active');
+  el.classList.add('active');
+}
+function showSubTab(prefix, name, el) {
+  const section = el.closest('.section');
+  section.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  section.querySelectorAll('.sub-section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(prefix+'-'+name).classList.add('active');
+  if(name==='simple90') s90Calc();
+  if(name==='offset') soCalc();
+  if(name==='pred_offset') poCalc();
+  if(name==='return') retCalc();
+}
+function showDPDiagram(type, el) {
+  el.closest('.card').querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('dp_diag_dry').style.display = type==='dry'?'':'none';
+  document.getElementById('dp_diag_wet').style.display = type==='wet'?'':'none';
+}
+function toggleFault(el) { el.classList.toggle('open'); el.nextElementSibling.classList.toggle('open'); }
+
+// ─── HELPERS ───────────────────────────────
+function showRes(id,rows,title){
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.innerHTML=`<div class="result-title">${title||'RESULTS'}</div>`+rows.map(([l,v,c])=>
+    `<div class="result-row"><span class="result-label">${l}</span><span class="result-value" style="color:${c||'var(--green-bright)'};">${v}</span></div>`
+  ).join('');
+  el.classList.add('show');
+}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.classList.add('show');}}
+function clearErr(id){document.getElementById(id)?.classList.remove('show');}
+
+
+// CALIBRATION
+function calcTransmitter(){
+  const lrv=+document.getElementById('c_lrv').value,urv=+document.getElementById('c_urv').value,pv=+document.getElementById('c_pv').value,unit=document.getElementById('c_unit').value;
+  clearErr('c_error');
+  if(isNaN(lrv)||isNaN(urv)||isNaN(pv)){showErr('c_error','Fill in LRV, URV and PV.');return;}
+  if(urv<=lrv){showErr('c_error','URV must be greater than LRV.');return;}
+  const span=urv-lrv,pct=((pv-lrv)/span)*100,mA=4+((pv-lrv)/span)*16,v250=(mA*250)/1000;
+  let st='OK - IN RANGE',sc='var(--accent2)';
+  if(mA<3.6){st='FAULT - open circuit / below 3.6mA';sc='var(--accent3)';}
+  else if(mA<4){st='ALARM LOW - under-range';sc='var(--accent3)';}
+  else if(mA>21){st='FAULT HIGH - above 21mA';sc='var(--accent3)';}
+  else if(mA>20){st='ALARM HIGH - over-range';sc='var(--accent)';}
+  showRes('c_result',[['Process Value',`${pv.toFixed(2)} ${unit}`],['Span',`${span.toFixed(2)} ${unit}`],['% of Range',`${pct.toFixed(2)} %`],['4-20mA Output',`${mA.toFixed(3)} mA`],['Voltage at 250 ohm',`${v250.toFixed(3)} V`],['NAMUR Status',st,sc]],'CALCULATED OUTPUT');
+}
+function calcCalTable(){
+  const lrv=+document.getElementById('ct_lrv').value,urv=+document.getElementById('ct_urv').value;
+  clearErr('ct_error');
+  if(isNaN(lrv)||isNaN(urv)){showErr('ct_error','Enter LRV and URV.');return;}
+  if(urv<=lrv){showErr('ct_error','URV must be greater than LRV.');return;}
+  const span=urv-lrv,res=document.getElementById('ct_result');
+  res.innerHTML=`<div class="result-title">5-POINT CALIBRATION TABLE</div><div class="result-row"><span class="result-label">POINT</span><span class="result-label">ENG VALUE</span><span class="result-label">mA</span></div>`+[0,25,50,75,100].map(p=>`<div class="result-row"><span class="result-value">${p}%</span><span class="result-value">${(lrv+(p/100)*span).toFixed(3)}</span><span class="result-value">${(4+(p/100)*16).toFixed(2)} mA</span></div>`).join('');
+  res.classList.add('show');
+}
+function calcMaReverse(){
+  const mA=+document.getElementById('ma_in').value,lrv=+document.getElementById('ma_lrv').value,urv=+document.getElementById('ma_urv').value,unit=document.getElementById('ma_unit').value||'units';
+  clearErr('ma_error');
+  if(isNaN(mA)||isNaN(lrv)||isNaN(urv)){showErr('ma_error','Enter all fields.');return;}
+  if(urv<=lrv){showErr('ma_error','URV must be greater than LRV.');return;}
+  showRes('ma_result',[['Signal',`${mA.toFixed(3)} mA`],['% of Span',`${((mA-4)/16*100).toFixed(2)} %`],['Engineering Value',`${(lrv+((mA-4)/16)*(urv-lrv)).toFixed(3)} ${unit}`]]);
+}
+
+// TX SETUP
+function calcUltrasonic(){
+  const h=+document.getElementById('us_height').value,nozzle=+document.getElementById('us_nozzle').value||0,
+        db=+document.getElementById('us_deadband').value,llll=+document.getElementById('us_llll').value||0,hlhl=+document.getElementById('us_hlhl').value;
+  clearErr('us_error');
+  if(isNaN(h)||isNaN(db)||isNaN(hlhl)){showErr('us_error','Enter vessel height, dead band and max level.');return;}
+  const lrvDist=nozzle+(h-hlhl),urvDist=nozzle+(h-llll),span=hlhl-llll,minMeas=nozzle+db;
+  if(lrvDist<minMeas){showErr('us_error','WARNING: LRV distance is inside the dead band. Max level is too high for this sensor. Reduce max level or choose a sensor with shorter blanking distance.');return;}
+  showRes('us_result',[['Usable Span',`${span.toFixed(0)} mm`],['LRV Distance from sensor (full tank)',`${lrvDist.toFixed(0)} mm`,'var(--accent2)'],['URV Distance from sensor (empty tank)',`${urvDist.toFixed(0)} mm`,'var(--accent)'],['Min Measurable Distance (end of dead band)',`${minMeas.toFixed(0)} mm`,'var(--accent3)'],['Programme Note','LRV dist = 4mA, URV dist = 20mA in device config','var(--muted)']],'ULTRASONIC / RADAR SETUP');
+}
+function updateDPFields(){
+  const wet=document.getElementById('dp_type').value==='wet';
+  document.getElementById('dp_wetleg_grp').style.display=wet?'':'none';
+  document.getElementById('dp_wetleg_h_grp').style.display=wet?'':'none';
+}
+function calcDPLevel(){
+  const type=document.getElementById('dp_type').value,sg=+document.getElementById('dp_sg').value||1,
+        span=+document.getElementById('dp_span').value,txoff=+document.getElementById('dp_txoff').value||0;
+  clearErr('dp_error');
+  if(isNaN(span)||span<=0){showErr('dp_error','Enter measurement span.');return;}
+  if(type==='dry'){
+    const supp=txoff*sg;
+    const lrv=supp,urv=lrv+span*sg;
+    showRes('dp_result',[['Config','Dry Leg - open vessel'],['LRV (empty tank)',`${lrv.toFixed(1)} mmH2O`,'var(--accent3)'],['URV (full tank)',`${urv.toFixed(1)} mmH2O`,'var(--accent2)'],['Span',`${(urv-lrv).toFixed(1)} mmH2O`],[txoff>0?'Zero Suppression Required':'No suppression needed',txoff>0?`${supp.toFixed(1)} mmH2O - add to LRV`:'TX is flush with HP tap','var(--accent)']],'DP LEVEL - DRY LEG');
+  } else {
+    const wetsg=+document.getElementById('dp_wetsg').value||1,weth=+document.getElementById('dp_weth').value;
+    if(isNaN(weth)){showErr('dp_error','Enter wet leg fill height.');return;}
+    const lpHead=weth*wetsg;
+    const lrv=(txoff*sg)-lpHead;
+    const urv=lrv+span*sg;
+    showRes('dp_result',[['Config','Wet Leg - closed / pressurised vessel'],['LP Wet Leg Head Pressure',`${lpHead.toFixed(1)} mmH2O`],['LRV (empty)',`${lrv.toFixed(1)} mmH2O`,'var(--accent3)'],['URV (full)',`${urv.toFixed(1)} mmH2O`,'var(--accent2)'],['Span',`${(urv-lrv).toFixed(1)} mmH2O`],['Note',lrv<0?`Zero Elevation required: ${Math.abs(lrv).toFixed(1)} mmH2O`:'No elevation needed','var(--accent)']],'DP LEVEL - WET LEG');
+  }
+}
+function calcPressureLevel(){
+  const h=+document.getElementById('pt_height').value,sg=+document.getElementById('pt_sg').value||1,
+        below=+document.getElementById('pt_below').value||0,unit=document.getElementById('pt_unit').value;
+  clearErr('pt_error');
+  if(isNaN(h)||h<=0){showErr('pt_error','Enter tank height.');return;}
+  const conv={mmH2O:1,mbar:0.0981,kPa:0.00981,bar:0.0000981,PSI:0.001422}[unit];
+  const urv=((h+below)*sg)*conv,lrv=(below*sg)*conv;
+  showRes('pt_result',[['LRV (empty)',`${lrv.toFixed(3)} ${unit}`,'var(--accent3)'],['URV (full)',`${urv.toFixed(3)} ${unit}`,'var(--accent2)'],['Span',`${(urv-lrv).toFixed(3)} ${unit}`],['TX Offset below tank',`${below} mm${below>0?' - zero suppression applied':''}`,'var(--accent)'],['Fluid SG',`${sg}`]],'HYDROSTATIC PRESSURE TX');
+}
+function calcGWR(){
+  const probe=+document.getElementById('gwr_probe').value,topBlk=+document.getElementById('gwr_top_block').value||250,
+        botBlk=+document.getElementById('gwr_bot_block').value||100;
+  clearErr('gwr_error');
+  if(isNaN(probe)||probe<=0){showErr('gwr_error','Enter probe length.');return;}
+  const lrvDist=topBlk,urvDist=probe-botBlk,activeSpan=urvDist-lrvDist;
+  if(activeSpan<=0){showErr('gwr_error','Active span is zero or negative. Probe too short for blocking distances entered.');return;}
+  showRes('gwr_result',[['Probe Length',`${probe} mm`],['LRV Distance from flange (full)',`${lrvDist} mm`,'var(--accent2)'],['URV Distance from flange (empty)',`${urvDist} mm`,'var(--accent)'],['Active Measurement Span',`${activeSpan} mm`],['Top Blocking Zone',`${topBlk} mm`,'var(--accent3)'],['Bottom Dead Zone',`${botBlk} mm`,'var(--accent3)'],['Programme Note','LRV dist = 4mA, URV dist = 20mA in device config','var(--muted)']],'GUIDED WAVE RADAR SETUP');
+}
+
+// ═══════════════════════════════════════════
+// TUBE BENDING — LIVE SVG DRAWING ENGINE
+// ═══════════════════════════════════════════
+
+
+const BD={'6':{r:19,g90:10},'8':{r:22,g90:12},'10':{r:29,g90:15},'12':{r:38,g90:19},'16':{r:51,g90:25},'6.35':{r:19,g90:10},'9.53':{r:29,g90:15},'12.7':{r:38,g90:19}};
+function getBD(od){return BD[String(od)]||{r:38,g90:19};}
+
+// ─── SVG HELPERS ───────────────────────────
+const SVG_NS='http://www.w3.org/2000/svg';
+
+function svgEl(tag,attrs){
+  const el=document.createElementNS(SVG_NS,tag);
+  for(const[k,v]of Object.entries(attrs)) el.setAttribute(k,v);
+  return el;
+}
+
+// Draw a "real tube" — thick stroke with highlight and shadow for 3D look
+function tubePath(svg, points, color='#8ab49a', strokeW=14){
+  if(points.length<2) return;
+  let d=`M ${points[0][0]} ${points[0][1]}`;
+  for(let i=1;i<points.length;i++) d+=` L ${points[i][0]} ${points[i][1]}`;
+  // Shadow
+  svg.appendChild(svgEl('path',{d,stroke:'#050810',fill:'none','stroke-width':strokeW+4,'stroke-linecap':'round','stroke-linejoin':'round',opacity:'0.7'}));
+  // Main tube body
+  svg.appendChild(svgEl('path',{d,stroke:color,fill:'none','stroke-width':strokeW,'stroke-linecap':'round','stroke-linejoin':'round'}));
+  // Highlight stripe
+  const hlPts=offsetPath(points,-strokeW*0.28);
+  let hl=`M ${hlPts[0][0]} ${hlPts[0][1]}`;
+  for(let i=1;i<hlPts.length;i++) hl+=` L ${hlPts[i][0]} ${hlPts[i][1]}`;
+  svg.appendChild(svgEl('path',{d:hl,stroke:'rgba(255,255,255,0.22)',fill:'none','stroke-width':strokeW*0.3,'stroke-linecap':'round','stroke-linejoin':'round'}));
+}
+
+// Offset a polyline perpendicular to each segment (for highlight)
+function offsetPath(pts, dist){
+  return pts.map((p,i)=>{
+    const prev=pts[i-1]||pts[i], next=pts[i+1]||pts[i];
+    const dx=next[0]-prev[0], dy=next[1]-prev[1];
+    const len=Math.sqrt(dx*dx+dy*dy)||1;
+    return [p[0]-dy/len*dist, p[1]+dx/len*dist];
+  });
+}
+
+// Draw mark line with label
+function drawMark(svg, x, y, label, color='#f5a623', vertical=true, above=true){
+  const len=22, gap=above?-len:len, txtY=above?y-len-6:y+len+14;
+  if(vertical){
+    svg.appendChild(svgEl('line',{x1:x,y1:y-len,x2:x,y2:y+len,stroke:color,'stroke-width':2.5}));
+    const t=svgEl('text',{x,y:txtY,'text-anchor':'middle',fill:color,'font-size':'9.5','font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=label; svg.appendChild(t);
+  } else {
+    svg.appendChild(svgEl('line',{x1:x-len,y1:y,x2:x+len,y2:y,stroke:color,'stroke-width':2.5}));
+    const t=svgEl('text',{x:x+len+4,y:y+4,fill:color,'font-size':'9.5','font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=label; svg.appendChild(t);
+  }
+}
+
+// Draw dimension line with arrowheads and value
+function dimLine(svg, x1,y1, x2,y2, label, color='#00c9a7', offset=0){
+  // perpendicular offset
+  const dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy)||1;
+  const nx=-dy/len*offset, ny=dx/len*offset;
+  const ax=x1+nx,ay=y1+ny,bx=x2+nx,by=y2+ny;
+  // extension lines
+  svg.appendChild(svgEl('line',{x1,y1,x2:ax,y2:ay,stroke:color,'stroke-width':1,opacity:'0.5','stroke-dasharray':'2,2'}));
+  svg.appendChild(svgEl('line',{x1:x2,y1:y2,x2:bx,y2:by,stroke:color,'stroke-width':1,opacity:'0.5','stroke-dasharray':'2,2'}));
+  // main dim line
+  svg.appendChild(svgEl('line',{x1:ax,y1:ay,x2:bx,y2:by,stroke:color,'stroke-width':1.5}));
+  // arrowheads
+  arrow(svg,ax,ay,bx,by,color);
+  arrow(svg,bx,by,ax,ay,color);
+  // label in middle
+  const mx=(ax+bx)/2,my=(ay+by)/2;
+  // bg rect for readability
+  const bg=svgEl('rect',{x:mx-28,y:my-9,width:56,height:14,rx:3,fill:'#060d06',opacity:'0.85'});
+  svg.appendChild(bg);
+  const t=svgEl('text',{x:mx,y:my+4,'text-anchor':'middle',fill:color,'font-size':'9','font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+  t.textContent=label; svg.appendChild(t);
+}
+
+function arrow(svg,fx,fy,tx,ty,color){
+  const dx=tx-fx,dy=ty-fy,len=Math.sqrt(dx*dx+dy*dy)||1;
+  const ux=dx/len,uy=dy/len;
+  const sz=7;
+  const p=`${fx},${fy} ${fx-ux*sz+uy*sz*0.4},${fy-uy*sz-ux*sz*0.4} ${fx-ux*sz-uy*sz*0.4},${fy-uy*sz+ux*sz*0.4}`;
+  svg.appendChild(svgEl('polygon',{points:p,fill:color}));
+}
+
+function labelText(svg,x,y,text,color='#6a9e6a',size=9){
+  const t=svgEl('text',{x,y,'text-anchor':'middle',fill:color,'font-size':size,'font-family':'Barlow,sans-serif','font-weight':'600'});
+  t.textContent=text; svg.appendChild(t);
+}
+
+function clearSvg(id){
+  const s=document.getElementById(id);
+  if(s) while(s.firstChild) s.removeChild(s.firstChild);
+  return s;
+}
+
+// Draw angle arc
+function angleArc(svg,cx,cy,r,startDeg,endDeg,color='#6a9e6a'){
+  const s=startDeg*Math.PI/180, e=endDeg*Math.PI/180;
+  const x1=cx+r*Math.cos(s),y1=cy+r*Math.sin(s);
+  const x2=cx+r*Math.cos(e),y2=cy+r*Math.sin(e);
+  const large=Math.abs(endDeg-startDeg)>180?1:0;
+  svg.appendChild(svgEl('path',{d:`M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`,stroke:color,'stroke-width':1.5,fill:'none','stroke-dasharray':'3,2'}));
+}
+
+// ─── 90° BEND ──────────────────────────────
+function s90Calc(){
+  const od=document.getElementById('s90_od')?.value, dist=+document.getElementById('s90_dist')?.value;
+  const svg=clearSvg('svg_s90'); if(!svg) return;
+  const bd=getBD(od), m1=dist-bd.g90;
+  if(!dist||dist<=0){
+    draw90Placeholder(svg); return;
+  }
+  // Layout: horizontal tube then 90 down, fitted into 500x260
+  const W=500,H=260,pad=50,legH=100;
+  const scale=Math.min(1.8,(W-pad*2-legH)/Math.max(dist,80));
+  const tubW=dist*scale, ox=pad, oy=130;
+  const pts=[[ox,oy],[ox+tubW,oy],[ox+tubW,oy+legH]];
+  // Tube
+  tubePath(svg,pts);
+  // End cap
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Arrow end
+  svg.appendChild(svgEl('circle',{cx:ox+tubW,cy:oy+legH,r:5,fill:'#1a3a1a',stroke:'#6a9e6a','stroke-width':1.5,'stroke-dasharray':'3,2'}));
+  // Mark 1
+  const mx=ox+m1*scale;
+  svg.appendChild(svgEl('line',{x1:mx,y1:oy-28,x2:mx,y2:oy+28,stroke:'#f5a623','stroke-width':3}));
+  svg.appendChild(svgEl('rect',{x:mx-26,y:oy-50,width:52,height:16,rx:3,fill:'rgba(245,166,35,0.15)',stroke:'#f5a623','stroke-width':1}));
+  const t=svgEl('text',{x:mx,y:oy-38,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+  t.textContent=`M1`; svg.appendChild(t);
+  // Dimension: end to M1
+  dimLine(svg,ox,oy+50,mx,oy+50,`${m1.toFixed(0)}mm`,'#f5a623',0);
+  // Dimension: full measure-to
+  dimLine(svg,ox,oy-55,ox+tubW,oy-55,`${dist.toFixed(0)}mm`,'#00c9a7',0);
+  // Gain bracket
+  dimLine(svg,mx,oy+70,ox+tubW,oy+70,`Gain ${bd.g90}mm`,'#e05252',0);
+  // Angle arc
+  angleArc(svg,ox+tubW,oy,30,0,90,'#6a9e6a');
+  labelText(svg,ox+tubW+42,oy+20,'90°','#6a9e6a',10);
+  // Labels
+  labelText(svg,ox,oy-18,'END','#6a9e6a',9);
+  labelText(svg,ox+tubW+22,oy+legH-10,'OUT','#6a9e6a',9);
+  // Result
+  showRes('s90_result',[
+    ['Mark 1',`${m1.toFixed(1)} mm from tube end`,'var(--accent)'],
+    ['Gain deducted',`${bd.g90} mm`],['Bend radius',`${bd.r} mm`],
+    ['Tip','Align Mark 1 with back-of-bend arrow. Bend to 90°.','var(--muted)']
+  ],'90° BEND MARKS');
+}
+function draw90Placeholder(svg){
+  const W=500,H=260,ox=50,oy=130,legH=90,tubW=280;
+  const pts=[[ox,oy],[ox+tubW,oy],[ox+tubW,oy+legH]];
+  tubePath(svg,pts,'#1a3a1a',10);
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:6,fill:'#0d1a26',stroke:'#1a3a1a','stroke-width':2}));
+  // Labels
+  const mkLabel=(txt,x,y,c='#243650')=>{const t=svgEl('text',{x,y,'text-anchor':'middle',fill:c,'font-size':10,'font-family':'Barlow,sans-serif'});t.textContent=txt;svg.appendChild(t);};
+  mkLabel('Measure To (end → back of bend)→',ox+tubW/2,oy-20,'#0d1a0d');
+  mkLabel('← Mark 1 goes here',ox+tubW*0.65,oy+22,'#1a3a1a');
+  mkLabel('Enter values above to see live diagram','250','220','#1e2d3d');
+  mkLabel('END',ox-5,oy-18,'#1e2d3d');
+}
+
+// ─── SIMPLE OFFSET ─────────────────────────
+function soCalc(){
+  const od=document.getElementById('so_od')?.value,offset=+document.getElementById('so_offset')?.value,start=+document.getElementById('so_start')?.value||0;
+  const svg=clearSvg('svg_so'); if(!svg) return;
+  if(!offset||offset<=0){labelText(svg,250,120,'ENTER OFFSET TO SEE DIAGRAM','#1e2d3d',12);return;}
+  const g=getBD(od).g90/2, travel=offset/Math.sin(Math.PI/4), m1=start-g, m2=m1+travel;
+  drawOffsetSVG(svg,'svg_so',od,start,offset,45,m1,m2,travel,'SIMPLE OFFSET MARKS',[
+    ['Mark 1 — 1st bend (45°)',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Mark 2 — 2nd bend (45°)',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${travel.toFixed(1)} mm`,'#00ff88'],
+    ['Offset achieved',`${offset.toFixed(1)} mm`],
+    ['Gain per 45° bend',`${g} mm`],['Tip','Rotate 180° after M1 bend, align M2.','var(--muted)']
+  ],'so_result');
+}
+
+// ─── PREDICTIVE OFFSET ─────────────────────
+function poCalc(){
+  const od=document.getElementById('po_od')?.value,angle=+document.getElementById('po_angle')?.value,
+        offset=+document.getElementById('po_offset')?.value,start=+document.getElementById('po_start')?.value||0;
+  const svg=clearSvg('svg_po'); if(!svg) return;
+  if(!angle||!offset||angle<=0||offset<=0){labelText(svg,250,120,'ENTER ANGLE AND OFFSET','#1e2d3d',12);return;}
+  const rad=angle*Math.PI/180, travel=offset/Math.sin(rad), gainPer=(getBD(od).g90/90)*angle, m1=start-gainPer, m2=m1+travel;
+  drawOffsetSVG(svg,'svg_po',od,start,offset,angle,m1,m2,travel,'PREDICTIVE OFFSET MARKS',[
+    ['Bend angle',`${angle}° each bend`],['Mark 1',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Mark 2',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${travel.toFixed(1)} mm`,'#00ff88'],
+    ['Gain per bend',`${gainPer.toFixed(1)} mm`],['Offset achieved',`${offset.toFixed(1)} mm`],
+    ['Tip','Rotate 180° between bends.','var(--muted)']
+  ],'po_result');
+}
+
+// ─── PARALLEL OFFSET ───────────────────────
+function parCalc(){
+  const od=document.getElementById('par_od')?.value,gap=+document.getElementById('par_gap')?.value,
+        angle=+document.getElementById('par_angle')?.value||45,start=+document.getElementById('par_start')?.value||0;
+  const svg=clearSvg('svg_par'); if(!svg) return;
+  if(!gap||gap<=0){labelText(svg,250,130,'ENTER GAP TO SEE DIAGRAM','#1e2d3d',12);return;}
+  const rad=angle*Math.PI/180,travel=gap/Math.sin(rad),gainPer=(getBD(od).g90/90)*angle,m1=start-gainPer,m2=m1+travel;
+  drawParallelSVG(svg,od,start,gap,angle,m1,m2,travel);
+  showRes('par_result',[
+    ['Bend angle',`${angle}° each bend`],['Mark 1',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Mark 2',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${travel.toFixed(1)} mm`,'#00ff88'],
+    ['C/C gap achieved',`${gap.toFixed(1)} mm`],['Gain per bend',`${gainPer.toFixed(1)} mm`],
+    ['Tip','Rotate 180° between bends. Tube exits parallel at new C/C.','var(--muted)']
+  ],'PARALLEL OFFSET MARKS');
+}
+
+// Shared offset SVG drawing for simple/predictive
+function drawOffsetSVG(svg,svgId,od,start,offset,angle,m1,m2,travel,title,rows,resultId){
+  const W=500,H=240,rad=angle*Math.PI/180;
+  // Scale so everything fits
+  const totalHoriz=m2+60,totalVert=offset;
+  const scH=Math.min(1.4,(W-80)/Math.max(totalHoriz,100));
+  const scV=Math.min(1.4,(H*0.55)/Math.max(offset,30));
+  const sc=Math.min(scH,scV);
+  const ox=30,oy=H-50,sh=offset*sc;
+  // Path points: end → M1 → diagonal → M2 → exit
+  const x0=ox,y0=oy;
+  const xm1=ox+m1*sc;
+  // Diagonal from m1 to m2
+  const dx=travel*Math.cos(rad)*sc, dy=travel*Math.sin(rad)*sc;
+  const xm2=xm1+dx, ym2=oy-dy;
+  const xe=Math.min(xm2+(m1>0?m1:60)*sc,W-20);
+  const pts=[[x0,y0],[xm1,y0],[xm2,ym2],[xe,ym2]];
+  tubePath(svg,pts);
+  // End cap
+  svg.appendChild(svgEl('circle',{cx:x0,cy:y0,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Mark ticks
+  const markTick=(x,y,lbl,ab=true)=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-24,x2:x,y2:y+24,stroke:'#f5a623','stroke-width':3}));
+    const bg=svgEl('rect',{x:x-20,y:ab?y-44:y+28,width:40,height:14,rx:2,fill:'rgba(245,166,35,0.12)',stroke:'#f5a623','stroke-width':1});
+    svg.appendChild(bg);
+    const t=svgEl('text',{x,y:ab?y-32:y+40,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=lbl; svg.appendChild(t);
+  };
+  markTick(xm1,y0,'M1');
+  markTick(xm2,ym2,'M2',ym2>60);
+  // Dimensions
+  if(m1>5) dimLine(svg,x0,y0+38,xm1,y0+38,`${m1.toFixed(0)}mm`,'#6a9e6a',0);
+  // M1→M2 spacing — the key "bend then measure" distance, shown along the diagonal
+  const spLen=Math.sqrt((xm2-xm1)*(xm2-xm1)+(ym2-y0)*(ym2-y0));
+  const spAng=Math.atan2(ym2-y0,xm2-xm1)*180/Math.PI;
+  const smx=(xm1+xm2)/2, smy=(y0+ym2)/2;
+  const sbg=svgEl('rect',{x:smx-40,y:smy-22,width:80,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(sbg);
+  const stt=svgEl('text',{x:smx,y:smy-10,'text-anchor':'middle',fill:'#00ff88','font-size':9.5,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${spAng},${smx},${smy-10})`});
+  stt.textContent=`M1→M2: ${travel.toFixed(0)}mm`; svg.appendChild(stt);
+  // Offset dimension (vertical on right)
+  if(sh>15) dimLine(svg,xe+12,ym2,xe+12,y0,`${offset.toFixed(0)}mm`,'#00c9a7',0);
+  // Angle arc
+  const arcRad=35;
+  angleArc(svg,xm1,y0,arcRad,-rad*180/Math.PI,0,'#6a9e6a');
+  const t=svgEl('text',{x:xm1+arcRad+8,y:y0-10,fill:'#6a9e6a','font-size':9,'font-family':'Barlow,sans-serif','font-weight':'bold'});
+  t.textContent=`${angle}°`; svg.appendChild(t);
+  // Labels
+  labelText(svg,x0,y0-18,'END','#6a9e6a',9);
+  if(resultId) showRes(resultId,rows,title);
+}
+
+function drawParallelSVG(svg,od,start,gap,angle,m1,m2,travel){
+  const W=500,H=260,rad=angle*Math.PI/180;
+  const sc=Math.min(1.3,(W-80)/Math.max(m2+80,100),H*0.4/Math.max(gap,30));
+  const ox=30,oy=H-50,sh=gap*sc;
+  const xm1=ox+m1*sc,dx=travel*Math.cos(rad)*sc,dy=travel*Math.sin(rad)*sc;
+  const xm2=xm1+dx,ym2=oy-dy,xe=Math.min(xm2+80,W-20);
+  // Reference (existing) tube dashed
+  const refPts=[[ox,oy-sh],[xe,oy-sh]];
+  let rd=`M ${refPts[0][0]} ${refPts[0][1]}`;
+  for(let i=1;i<refPts.length;i++) rd+=` L ${refPts[i][0]} ${refPts[i][1]}`;
+  svg.appendChild(svgEl('path',{d:rd,stroke:'#1a3a1a',fill:'none','stroke-width':10,'stroke-linecap':'round','stroke-dasharray':'12,8',opacity:'0.6'}));
+  const rt=svgEl('text',{x:(ox+xe)/2,y:oy-sh-14,'text-anchor':'middle',fill:'#1a3a1a','font-size':8,'font-family':'Share Tech Mono,monospace'});
+  rt.textContent='EXISTING TUBE (reference)'; svg.appendChild(rt);
+  // New tube
+  tubePath(svg,[[ox,oy],[xm1,oy],[xm2,ym2],[xe,ym2]]);
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Marks
+  [[xm1,oy,'M1'],[xm2,ym2,'M2']].forEach(([x,y,l])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-24,x2:x,y2:y+24,stroke:'#f5a623','stroke-width':3}));
+    const t=svgEl('text',{x,y:y-30,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  // C/C gap dim
+  dimLine(svg,xe+18,oy-sh,xe+18,oy,`C/C ${gap.toFixed(0)}mm`,'#00c9a7',0);
+  if(m1>5) dimLine(svg,ox,oy+38,xm1,oy+38,`${m1.toFixed(0)}mm`,'#6a9e6a',0);
+  // M1→M2 spacing label along the diagonal
+  const smx2=(xm1+xm2)/2,smy2=(oy+ym2)/2;
+  const spAng2=Math.atan2(ym2-oy,xm2-xm1)*180/Math.PI;
+  const sbg2=svgEl('rect',{x:smx2-40,y:smy2-22,width:80,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(sbg2);
+  const stt2=svgEl('text',{x:smx2,y:smy2-10,'text-anchor':'middle',fill:'#00ff88','font-size':9.5,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${spAng2},${smx2},${smy2-10})`});
+  stt2.textContent=`M1→M2: ${travel.toFixed(0)}mm`; svg.appendChild(stt2);
+  labelText(svg,ox,oy-18,'END','#6a9e6a',9);
+}
+
+// ─── LONG RUN ──────────────────────────────
+function calcLongRun(){
+  const od=document.getElementById('lr_od').value,offset=+document.getElementById('lr_offset').value,
+        angle=+document.getElementById('lr_angle').value||45,middle=+document.getElementById('lr_middle').value||0,
+        start=+document.getElementById('lr_start').value||0;
+  clearErr('lr_error');
+  if(!offset||offset<=0){showErr('lr_error','Enter offset.');return;}
+  const rad=angle*Math.PI/180,diagTravel=offset/Math.sin(rad),gainPer=(getBD(od).g90/90)*angle;
+  const m1=start-gainPer,m2=m1+diagTravel,m3=m2+middle,m4=m3+diagTravel;
+  const svg=clearSvg('svg_lr');
+  if(svg) drawLongRunSVG(svg,od,start,offset,angle,m1,m2,m3,m4,diagTravel,middle);
+  showRes('lr_result',[
+    ['Bend angle',`${angle}° each bend`],['Mark 1',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Mark 2',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${diagTravel.toFixed(1)} mm`,'#00ff88'],
+    ['Mark 3',`${m3.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M2 → M3 spacing (middle run)',`${middle.toFixed(1)} mm`,'var(--muted)'],
+    ['Mark 4',`${m4.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M3 → M4 spacing (bend then measure)',`${diagTravel.toFixed(1)} mm`,'#00ff88'],
+    ['Gain per bend',`${gainPer.toFixed(1)} mm`],
+    ['Tip','Rotate 180° at bends 2 and 4.','var(--muted)']
+  ],'LONG RUN OFFSET');
+}
+function drawLongRunSVG(svg,od,start,offset,angle,m1,m2,m3,m4,diagTravel,middle){
+  const W=500,H=240,rad=angle*Math.PI/180;
+  const total=m4+60,sc=Math.min(1.2,(W-60)/Math.max(total,100),H*0.4/Math.max(offset,30));
+  const ox=25,oy=H-50,sh=offset*sc;
+  const xm1=ox+m1*sc,dx=diagTravel*Math.cos(rad)*sc,dy=diagTravel*Math.sin(rad)*sc;
+  const xm2=xm1+dx,ym2=oy-dy;
+  const xm3=xm2+middle*sc,ym3=ym2;
+  const xm4=xm3+dx,ym4=oy;
+  const xe=Math.min(xm4+40,W-15);
+  tubePath(svg,[[ox,oy],[xm1,oy],[xm2,ym2],[xm3,ym3],[xm4,oy],[xe,oy]]);
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  [[xm1,oy,'M1'],[xm2,ym2,'M2'],[xm3,ym3,'M3'],[xm4,oy,'M4']].forEach(([x,y,l])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-22,x2:x,y2:y+22,stroke:'#f5a623','stroke-width':2.5}));
+    const ab=y<H/2;
+    const t=svgEl('text',{x,y:ab?y-28:y+32,'text-anchor':'middle',fill:'#f5a623','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  dimLine(svg,xm2+2,ym2-35,xm3-2,ym3-35,`Mid ${middle.toFixed(0)}mm`,'#e05252',0);
+  // M1→M2 spacing on first diagonal
+  const lr_smx=(xm1+xm2)/2,lr_smy=(oy+ym2)/2,lr_ang=Math.atan2(ym2-oy,xm2-xm1)*180/Math.PI;
+  const lr_bg=svgEl('rect',{x:lr_smx-36,y:lr_smy-22,width:72,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(lr_bg);
+  const lr_t=svgEl('text',{x:lr_smx,y:lr_smy-10,'text-anchor':'middle',fill:'#00ff88','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${lr_ang},${lr_smx},${lr_smy-10})`});
+  lr_t.textContent=`M1→M2: ${diagTravel.toFixed(0)}mm`; svg.appendChild(lr_t);
+  // M3→M4 spacing on second diagonal
+  const lr_smx4=(xm3+xm4)/2,lr_smy4=(ym3+oy)/2,lr_ang4=Math.atan2(oy-ym3,xm4-xm3)*180/Math.PI;
+  const lr_bg4=svgEl('rect',{x:lr_smx4-36,y:lr_smy4-22,width:72,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(lr_bg4);
+  const lr_t4=svgEl('text',{x:lr_smx4,y:lr_smy4-10,'text-anchor':'middle',fill:'#00ff88','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${lr_ang4},${lr_smx4},${lr_smy4-10})`});
+  lr_t4.textContent=`M3→M4: ${diagTravel.toFixed(0)}mm`; svg.appendChild(lr_t4);
+  labelText(svg,ox,oy-18,'END','#6a9e6a',9);
+  labelText(svg,xe+10,oy+4,'OUT','#6a9e6a',9);
+}
+
+// ─── JOINT OFFSET ──────────────────────────
+function calcJointOffset(){
+  const od=document.getElementById('jo_od').value,offset=+document.getElementById('jo_offset').value,
+        angle=+document.getElementById('jo_angle').value||45,span=+document.getElementById('jo_span').value,
+        insert=+document.getElementById('jo_insert').value||0;
+  clearErr('jo_error');
+  if(!offset||!span){showErr('jo_error','Enter offset and fitting span.');return;}
+  const rad=angle*Math.PI/180,diagTravel=offset/Math.sin(rad),run=offset/Math.tan(rad);
+  const gainPer=(getBD(od).g90/90)*angle;
+  const straight1=(span-run)/2;
+  const m1=straight1-gainPer+insert;
+  const m2=m1+diagTravel;
+  const svg=clearSvg('svg_jo');
+  if(svg) drawJointSVG(svg,od,span,offset,angle,m1,m2,diagTravel,run,insert);
+  showRes('jo_result',[
+    ['Bend angle',`${angle}° each bend`],['Mark 1',`${m1.toFixed(1)} mm from fitting A face`,'var(--accent)'],
+    ['Mark 2',`${m2.toFixed(1)} mm from fitting A face`,'var(--accent)'],['Diagonal travel',`${diagTravel.toFixed(1)} mm`],
+    ['Run between fittings',`${run.toFixed(1)} mm`],
+    ['Est. cut length',`${(straight1*2+diagTravel-(2*gainPer)).toFixed(1)} mm`,'var(--accent2)'],
+    ['Tip','Measure from fitting face. Account for insertion on both ends.','var(--muted)']
+  ],'JOINT OFFSET MARKS');
+}
+function drawJointSVG(svg,od,span,offset,angle,m1,m2,diagTravel,run,insert){
+  const W=500,H=240,rad=angle*Math.PI/180;
+  const sc=Math.min(1.2,(W-80)/Math.max(span+40,100),H*0.45/Math.max(offset,30));
+  const ox=30,oy=H-50,sh=offset*sc;
+  const xm1=ox+m1*sc,dx=diagTravel*Math.cos(rad)*sc,dy=diagTravel*Math.sin(rad)*sc;
+  const xm2=xm1+dx,ym2=oy-dy,xe=ox+span*sc;
+  tubePath(svg,[[ox,oy],[xm1,oy],[xm2,ym2],[xe,ym2]]);
+  // Fittings
+  const fitA=svgEl('rect',{x:ox-18,y:oy-10,width:18,height:20,rx:3,fill:'#1a2e1a',stroke:'#6a9e6a','stroke-width':1.5});
+  svg.appendChild(fitA);
+  const ftA=svgEl('text',{x:ox-9,y:oy+30,'text-anchor':'middle',fill:'#6a9e6a','font-size':8,'font-family':'Share Tech Mono,monospace'});
+  ftA.textContent='FIT A'; svg.appendChild(ftA);
+  const fitB=svgEl('rect',{x:xe,y:ym2-10,width:18,height:20,rx:3,fill:'#1a2e1a',stroke:'#6a9e6a','stroke-width':1.5});
+  svg.appendChild(fitB);
+  const ftB=svgEl('text',{x:xe+9,y:ym2-16,'text-anchor':'middle',fill:'#6a9e6a','font-size':8,'font-family':'Share Tech Mono,monospace'});
+  ftB.textContent='FIT B'; svg.appendChild(ftB);
+  [[xm1,oy,'M1'],[xm2,ym2,'M2']].forEach(([x,y,l])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-22,x2:x,y2:y+22,stroke:'#f5a623','stroke-width':3}));
+    const t=svgEl('text',{x,y:y-28,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  dimLine(svg,ox,oy+40,xe,oy+40,`Span ${span.toFixed(0)}mm`,'#00c9a7',0);
+  dimLine(svg,xe+20,ym2,xe+20,oy,`Offset ${offset.toFixed(0)}mm`,'#e05252',0);
+  // M1→M2 spacing along the diagonal
+  const jo_smx=(xm1+xm2)/2,jo_smy=(oy+ym2)/2,jo_ang=Math.atan2(ym2-oy,xm2-xm1)*180/Math.PI;
+  const jo_bg=svgEl('rect',{x:jo_smx-40,y:jo_smy-22,width:80,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(jo_bg);
+  const jo_t=svgEl('text',{x:jo_smx,y:jo_smy-10,'text-anchor':'middle',fill:'#00ff88','font-size':9.5,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${jo_ang},${jo_smx},${jo_smy-10})`});
+  jo_t.textContent=`M1→M2: ${diagTravel.toFixed(0)}mm`; svg.appendChild(jo_t);
+}
+
+// ─── SADDLE ────────────────────────────────
+function calcSaddle(){
+  const od=document.getElementById('sad_od').value,h=+document.getElementById('sad_height').value,
+        angle=+document.getElementById('sad_angle').value,start=+document.getElementById('sad_start').value||0;
+  clearErr('sad_error');
+  const svg=clearSvg('svg_sad');
+  if(!h||h<=0){if(svg) labelText(svg,250,120,'ENTER OBSTACLE HEIGHT','#1e2d3d',12);return;}
+  const rad=angle*Math.PI/180,sideTravel=h/Math.sin(rad),gainSide=(getBD(od).g90/90)*angle;
+  const m1=start-gainSide,m2=m1+sideTravel,m3=m2+sideTravel;
+  if(svg) drawSaddleSVG(svg,od,start,h,angle,m1,m2,m3,sideTravel);
+  showRes('sad_result',[
+    ['Side / centre angle',`${angle}° / ${angle*2}°`],
+    ['Mark 1 — side bend',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${sideTravel.toFixed(1)} mm`,'#00ff88'],
+    ['Mark 2 — centre (double angle)',`${m2.toFixed(1)} mm from end`,'var(--accent3)'],
+    ['M2 → M3 spacing (bend then measure)',`${sideTravel.toFixed(1)} mm`,'#00ff88'],
+    ['Mark 3 — side bend',`${m3.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Obstacle height',`${h} mm`],
+    ['Tip','Bend M1 to side angle. M2 to double angle opposite. M3 same as M1.','var(--muted)']
+  ],'SADDLE 3-BEND MARKS');
+}
+function drawSaddleSVG(svg,od,start,h,angle,m1,m2,m3,sideTravel){
+  const W=500,H=240,rad=angle*Math.PI/180;
+  const total=m3+80;
+  const sc=Math.min(1.3,(W-60)/Math.max(total,100),H*0.4/Math.max(h,30));
+  const ox=25,oy=H-50,hs=h*sc;
+  const xm1=ox+m1*sc,xm2=ox+m2*sc,xm3=ox+m3*sc,xe=Math.min(xm3+60,W-15);
+  const ym=oy-hs;
+  tubePath(svg,[[ox,oy],[xm1,oy],[xm2,ym],[xm3,oy],[xe,oy]]);
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Obstacle block
+  const obW=Math.abs(xm3-xm1)*0.85,obX=xm1+(Math.abs(xm3-xm1)-obW)/2;
+  svg.appendChild(svgEl('rect',{x:obX,y:oy-12,width:obW,height:16,rx:3,fill:'#0f1f0f',stroke:'#1a3a1a','stroke-width':2}));
+  const ot=svgEl('text',{x:obX+obW/2,y:oy+1,'text-anchor':'middle',fill:'#3a6a3a','font-size':8,'font-family':'Share Tech Mono,monospace'});
+  ot.textContent='OBSTACLE'; svg.appendChild(ot);
+  // Marks
+  [[xm1,oy,'M1','#f5a623'],[xm2,ym,'M2','#e05252'],[xm3,oy,'M3','#f5a623']].forEach(([x,y,l,c])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-24,x2:x,y2:y+24,stroke:c,'stroke-width':3}));
+    const ab=y<H/2;
+    const t=svgEl('text',{x,y:ab?y-30:y+34,'text-anchor':'middle',fill:c,'font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  // Height dim
+  dimLine(svg,xe+12,ym,xe+12,oy,`H ${h.toFixed(0)}mm`,'#00c9a7',0);
+  if(m1>5) dimLine(svg,ox,oy+40,xm1,oy+40,`${m1.toFixed(0)}mm`,'#6a9e6a',0);
+  // M1→M2 spacing along rising diagonal
+  const sd_smx=(xm1+xm2)/2,sd_smy=(oy+ym)/2,sd_ang=Math.atan2(ym-oy,xm2-xm1)*180/Math.PI;
+  const sd_bg=svgEl('rect',{x:sd_smx-38,y:sd_smy-22,width:76,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(sd_bg);
+  const sd_t=svgEl('text',{x:sd_smx,y:sd_smy-10,'text-anchor':'middle',fill:'#00ff88','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${sd_ang},${sd_smx},${sd_smy-10})`});
+  sd_t.textContent=`M1→M2: ${sideTravel.toFixed(0)}mm`; svg.appendChild(sd_t);
+  // M2→M3 spacing along falling diagonal
+  const sd_smx3=(xm2+xm3)/2,sd_smy3=(ym+oy)/2,sd_ang3=Math.atan2(oy-ym,xm3-xm2)*180/Math.PI;
+  const sd_bg3=svgEl('rect',{x:sd_smx3-38,y:sd_smy3-22,width:76,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(sd_bg3);
+  const sd_t3=svgEl('text',{x:sd_smx3,y:sd_smy3-10,'text-anchor':'middle',fill:'#00ff88','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${sd_ang3},${sd_smx3},${sd_smy3-10})`});
+  sd_t3.textContent=`M2→M3: ${sideTravel.toFixed(0)}mm`; svg.appendChild(sd_t3);
+  labelText(svg,ox,oy-18,'END','#6a9e6a',9);
+}
+
+// ─── ROLLING OFFSET ────────────────────────
+function calcRollingOffset(){
+  const od=document.getElementById('ro_od').value,run=+document.getElementById('ro_run').value,
+        rise=+document.getElementById('ro_rise').value,start=+document.getElementById('ro_start').value||0;
+  clearErr('ro_error');
+  const svg=clearSvg('svg_ro');
+  if(!run||!rise||run<=0||rise<=0){showErr('ro_error','Enter run and rise.');if(svg)labelText(svg,250,130,'ENTER RUN AND RISE','#1e2d3d',12);return;}
+  const diagonal=Math.sqrt(run*run+rise*rise);
+  const rollAngle=Math.atan2(run,rise)*180/Math.PI;
+  const bendAngle=Math.atan2(diagonal,Math.max(start,diagonal))*180/Math.PI;
+  const gainPer=(getBD(od).g90/90)*bendAngle;
+  const m1=start-gainPer,m2=m1+diagonal;
+  if(svg) drawRollingSVG(svg,start,run,rise,diagonal,rollAngle,bendAngle,m1,m2);
+  showRes('ro_result',[
+    ['True travel (diagonal)',`${diagonal.toFixed(1)} mm`,'var(--accent)'],
+    ['Roll angle — rotate tube before bending',`${rollAngle.toFixed(1)}°`,'var(--accent)'],
+    ['Bend angle',`${bendAngle.toFixed(1)}°`],
+    ['Mark 1',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${diagonal.toFixed(1)} mm`,'#00ff88'],
+    ['Mark 2',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Rise',`${rise.toFixed(1)} mm`],['Run',`${run.toFixed(1)} mm`],
+    ['Tip',`Set roll angle ${rollAngle.toFixed(1)}° with digital protractor before each bend.`,'var(--muted)']
+  ],'ROLLING OFFSET MARKS');
+}
+function drawRollingSVG(svg,start,run,rise,diagonal,rollAngle,bendAngle,m1,m2){
+  const W=500,H=260;
+  const sc=Math.min(1.4,(W-80)/Math.max(m2+60,100),(H*0.4)/Math.max(rise,20));
+  const ox=30,oy=H-60;
+  const xs=ox,ys=oy;
+  const xm1=ox+m1*sc;
+  // The travel goes diagonally — rise up, run across
+  const rad_r=Math.atan2(rise,run);
+  const visAngle=Math.atan2(rise*sc,diagonal*sc); // vertical tilt in 2D projection
+  const xm2=xm1+diagonal*sc;
+  const ym2=oy-rise*sc;
+  const xe=Math.min(xm2+60,W-20);
+  tubePath(svg,[[xs,ys],[xm1,ys],[xm2,ym2],[xe,ym2]]);
+  // end cap
+  svg.appendChild(svgEl('circle',{cx:xs,cy:ys,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Marks
+  [[xm1,ys,'M1'],[xm2,ym2,'M2']].forEach(([x,y,l])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:y-24,x2:x,y2:y+24,stroke:'#f5a623','stroke-width':3}));
+    const ab=y<H*0.45;
+    const t=svgEl('text',{x,y:ab?y-30:y+34,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  // Rise dim (vertical)
+  dimLine(svg,xe+15,ym2,xe+15,ys,`Rise ${rise.toFixed(0)}mm`,'#00c9a7',0);
+  // Run dim (horizontal projected)
+  dimLine(svg,xm1,ys+42,xm2,ys+42,`Run ${run.toFixed(0)}mm`,'#e05252',0);
+  // M1→M2 spacing — shown as a separate green label below travel label
+  const ro_smx=(xm1+xm2)/2,ro_smy=(ys+ym2)/2+12;
+  const ro_ang=Math.atan2(ym2-ys,xm2-xm1)*180/Math.PI;
+  const ro_bg=svgEl('rect',{x:ro_smx-40,y:ro_smy,width:80,height:16,rx:3,fill:'rgba(0,50,20,0.92)',stroke:'#00c9a7','stroke-width':1});
+  svg.appendChild(ro_bg);
+  const ro_tt=svgEl('text',{x:ro_smx,y:ro_smy+11,'text-anchor':'middle',fill:'#00ff88','font-size':9.5,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${ro_ang},${ro_smx},${ro_smy+11})`});
+  ro_tt.textContent=`M1→M2: ${diagonal.toFixed(0)}mm`; svg.appendChild(ro_tt);
+  // Travel label on diagonal
+  const mx=(xm1+xm2)/2,my=(ys+ym2)/2;
+  const ang_d=Math.atan2(ym2-ys,xm2-xm1)*180/Math.PI;
+  const bg=svgEl('rect',{x:mx-32,y:my-20,width:64,height:14,rx:3,fill:'rgba(6,13,6,0.9)'});
+  svg.appendChild(bg);
+  const tt=svgEl('text',{x:mx,y:my-9,'text-anchor':'middle',fill:'#f5a623','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold',transform:`rotate(${ang_d},${mx},${my-9})`});
+  tt.textContent=`Travel ${diagonal.toFixed(0)}mm`; svg.appendChild(tt);
+  // Roll angle indicator
+  const arc=svgEl('path',{d:`M ${xm1-30} ${ys} A 30 30 0 0 0 ${xm1-30*Math.cos(rollAngle*Math.PI/180)} ${ys-30*Math.sin(rollAngle*Math.PI/180)}`,stroke:'#6a9e6a','stroke-width':1.5,fill:'none','stroke-dasharray':'3,2'});
+  svg.appendChild(arc);
+  const rl=svgEl('text',{x:xm1-55,y:ys-20,'text-anchor':'middle',fill:'#6a9e6a','font-size':8,'font-family':'Barlow,sans-serif','font-weight':'bold'});
+  rl.textContent=`Roll ${rollAngle.toFixed(1)}°`; svg.appendChild(rl);
+  labelText(svg,xs,ys-18,'END','#6a9e6a',9);
+}
+
+// ─── RETURN BEND ───────────────────────────
+function retCalc(){
+  const od=document.getElementById('ret_od')?.value,dist=+document.getElementById('ret_dist')?.value;
+  const svg=clearSvg('svg_ret');
+  if(!dist||dist<=0){if(svg)labelText(svg,250,110,'ENTER DISTANCE TO SEE DIAGRAM','#1e2d3d',12);return;}
+  const bd=getBD(od),m1=dist-bd.g90,m2=m1+(2*bd.r);
+  if(svg) drawReturnSVG(svg,od,dist,m1,m2,bd);
+  showRes('ret_result',[
+    ['Mark 1 — first 90°',`${m1.toFixed(1)} mm from end`,'var(--accent)'],
+    ['M1 → M2 spacing (bend then measure)',`${(2*bd.r).toFixed(1)} mm`,'#00ff88'],
+    ['Mark 2 — second 90°',`${m2.toFixed(1)} mm from end`,'var(--accent)'],
+    ['Spacing = 2 × bend radius',`${(2*bd.r).toFixed(1)} mm`],
+    ['Bend radius',`${bd.r} mm`],
+    ['Tip','Two 90° bends back-to-back = 180° U-bend. Rotate 180° between bends.','var(--muted)']
+  ],'RETURN BEND MARKS');
+}
+function drawReturnSVG(svg,od,dist,m1,m2,bd){
+  const W=500,H=220;
+  const sc=Math.min(1.6,(W-60)/Math.max(m2+80,120));
+  const ox=30,oy=50,legH=110;
+  const xm1=ox+m1*sc,xm2=ox+m2*sc,xe=Math.min(xm2+60,W-20);
+  const tubColor='#8ab49a';
+  tubePath(svg,[[ox,oy],[xe,oy]]);
+  tubePath(svg,[[xm1,oy],[xm1,oy+legH],[xm2,oy+legH],[xm2,oy]]);
+  // end caps on entry
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // open end right
+  svg.appendChild(svgEl('circle',{cx:xe,cy:oy,r:5,fill:'#1a3a1a',stroke:'#6a9e6a','stroke-width':1.5,'stroke-dasharray':'3,2'}));
+  // Marks
+  [[xm1,'M1'],[xm2,'M2']].forEach(([x,l])=>{
+    svg.appendChild(svgEl('line',{x1:x,y1:oy-26,x2:x,y2:oy+26,stroke:'#f5a623','stroke-width':3}));
+    const t=svgEl('text',{x,y:oy-32,'text-anchor':'middle',fill:'#f5a623','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+    t.textContent=l; svg.appendChild(t);
+  });
+  // 2×r dim at bottom
+  dimLine(svg,xm1,oy+legH+20,xm2,oy+legH+20,`2×r = ${(2*bd.r).toFixed(0)}mm`,'#00c9a7',0);
+  // Measure To M1
+  dimLine(svg,ox,oy-40,xm1,oy-40,`${m1.toFixed(0)}mm`,'#6a9e6a',0);
+  // M1→M2 spacing — shown prominently above the marks as it's the key site measurement
+  const ret_smx=(xm1+xm2)/2;
+  const ret_bg=svgEl('rect',{x:ret_smx-42,y:oy-68,width:84,height:18,rx:3,fill:'rgba(0,50,20,0.95)',stroke:'#00ff88','stroke-width':1.5});
+  svg.appendChild(ret_bg);
+  const ret_t=svgEl('text',{x:ret_smx,y:oy-55,'text-anchor':'middle',fill:'#00ff88','font-size':10,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+  ret_t.textContent=`M1→M2: ${(2*bd.r).toFixed(0)}mm`; svg.appendChild(ret_t);
+  // Arc indicators
+  angleArc(svg,xm1,oy,25,90,180,'#6a9e6a');
+  angleArc(svg,xm2,oy,25,0,90,'#6a9e6a');
+  labelText(svg,ox,oy+18,'END','#6a9e6a',9);
+}
+
+// ─── FALL ──────────────────────────────────
+function calcFall(){
+  const run=+document.getElementById('fl_run').value,fallInV=document.getElementById('fl_fall').value,
+        angleInV=document.getElementById('fl_angle').value,grad=document.getElementById('fl_grad').value;
+  clearErr('fl_error');
+  let fall,angle;
+  if(grad&&run){fall=run/parseFloat(grad);angle=Math.atan(fall/run)*180/Math.PI;}
+  else if(run&&fallInV!==''){fall=parseFloat(fallInV);angle=Math.atan(fall/run)*180/Math.PI;}
+  else if(run&&angleInV!==''){angle=parseFloat(angleInV);fall=run*Math.tan(angle*Math.PI/180);}
+  else{showErr('fl_error','Enter Run + one of Fall, Angle, or pick a gradient.');return;}
+  const mmPerMetre=(fall/run)*1000,gradient=run/fall;
+  const svg=clearSvg('svg_fall');
+  if(svg) drawFallSVG(svg,run,fall,angle,mmPerMetre,gradient);
+  showRes('fl_result',[
+    ['Run (horizontal)',`${run.toFixed(0)} mm`],
+    ['Fall (vertical drop)',`${fall.toFixed(1)} mm`,'var(--accent2)'],
+    ['Angle',`${angle.toFixed(3)}°`],
+    ['Gradient',`1 : ${gradient.toFixed(0)}`,'var(--accent)'],
+    ['mm per metre',`${mmPerMetre.toFixed(1)} mm/m`,'var(--accent)'],
+  ],'FALL / GRADIENT');
+}
+function drawFallSVG(svg,run,fall,angle,mmPerMetre,gradient){
+  const W=500,H=200;
+  const sc=Math.min(1.4,(W-80)/Math.max(run,100),(H*0.5)/Math.max(fall,5));
+  const ox=35,oy=50,rW=run*sc,fH=fall*sc;
+  tubePath(svg,[[ox,oy],[ox+rW,oy+fH]]);
+  // High/low labels
+  svg.appendChild(svgEl('circle',{cx:ox,cy:oy,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  svg.appendChild(svgEl('circle',{cx:ox+rW,cy:oy+fH,r:7,fill:'#2a4a2a',stroke:'#8ab49a','stroke-width':2}));
+  // Horizontal ref line dashed
+  svg.appendChild(svgEl('line',{x1:ox,y1:oy,x2:ox+rW,y2:oy,stroke:'#1a3a1a','stroke-width':1.5,'stroke-dasharray':'8,5'}));
+  // Run dim
+  dimLine(svg,ox,oy+fH+28,ox+rW,oy+fH+28,`Run ${run.toFixed(0)}mm`,'#e05252',0);
+  // Fall dim
+  dimLine(svg,ox+rW+16,oy,ox+rW+16,oy+fH,`Fall ${fall.toFixed(1)}mm`,'#00c9a7',0);
+  // Angle arc
+  angleArc(svg,ox,oy,50,0,angle,'#6a9e6a');
+  const at=svgEl('text',{x:ox+58,y:oy+12,fill:'#6a9e6a','font-size':9,'font-family':'Barlow,sans-serif','font-weight':'bold'});
+  at.textContent=`${angle.toFixed(3)}°`; svg.appendChild(at);
+  // Gradient label on pipe
+  const mx=(ox+ox+rW)/2-10,my=(oy+oy+fH)/2-14;
+  const bg=svgEl('rect',{x:mx-44,y:my-10,width:88,height:16,rx:3,fill:'rgba(6,13,6,0.9)'});
+  svg.appendChild(bg);
+  const gt=svgEl('text',{x:mx,y:my+4,'text-anchor':'middle',fill:'#f5a623','font-size':9,'font-family':'Share Tech Mono,monospace','font-weight':'bold'});
+  gt.textContent=`1:${gradient.toFixed(0)} = ${mmPerMetre.toFixed(1)}mm/m`; svg.appendChild(gt);
+  labelText(svg,ox,oy-14,'HIGH','#6a9e6a',9);
+  labelText(svg,ox+rW,oy+fH+16,'LOW','#6a9e6a',9);
+}
+
+// ─── CUT LENGTH ────────────────────────────
+function calcCutLength(){
+  const run=+document.getElementById('cl_run').value,b90=+document.getElementById('cl_b90').value||0,
+        b45=+document.getElementById('cl_b45').value||0,od=document.getElementById('cl_od').value,
+        fit=+document.getElementById('cl_fit').value||0;
+  clearErr('cl_error');
+  if(!run||run<=0){showErr('cl_error','Enter run length.');return;}
+  const bd=getBD(od),g90tot=b90*bd.g90,g45tot=b45*(bd.g90/2),fitLoss=fit*2,cut=run-g90tot-g45tot-fitLoss;
+  showRes('cl_result',[
+    ['Total run',`${run.toFixed(1)} mm`],
+    [`90° gain (${b90}×${bd.g90}mm)`,`− ${g90tot.toFixed(1)} mm`,'var(--accent3)'],
+    [`45° gain (${b45}×${(bd.g90/2).toFixed(1)}mm)`,`− ${g45tot.toFixed(1)} mm`,'var(--accent3)'],
+    [`Fitting insertion (2×${fit}mm)`,`− ${fitLoss.toFixed(1)} mm`,'var(--accent3)'],
+    ['✂️ CUT TUBE TO',`${cut.toFixed(1)} mm`,'var(--accent2)']
+  ],'CUT LENGTH');
+}
+
+</script>
+</body>
+</html>
